@@ -144,6 +144,7 @@
     <ClInclude Include="general\stringUtility.h" />
     <ClInclude Include="general\vectorUtility.h" />
     <ClInclude Include="Relation.h" />
+    <ClInclude Include="test\test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FunctionalDependency.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="general\stringUtility.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Relation.cpp" />
+    <ClCompile Include="test\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

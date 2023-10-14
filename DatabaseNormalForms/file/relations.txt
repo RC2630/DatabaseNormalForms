@@ -1,0 +1,14 @@
+Rel(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer)
+Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank
+
+Bell(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer, Moose)
+Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank
+
+Dill(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer)
+Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Garbage
+Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank

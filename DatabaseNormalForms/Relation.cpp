@@ -3,6 +3,7 @@
 #include "general/stringUtility.h"
 #include "general/parseArguments.h"
 #include "general/ansi_codes.h"
+#include "general/file.h"
 
 Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds)
 : name(name), atts(atts) {
@@ -65,4 +66,53 @@ bool Relation::operator < (const Relation& other) const {
 
 bool Relation::operator == (const Relation& other) const {
     return tie(name, atts, fds) == tie(other.name, other.atts, other.fds);
+}
+
+Relation rel::getByName(const set<Relation>& rels, string name) {
+    for (const Relation& rel : rels) {
+        if (rel.name == name) {
+            return rel;
+        }
+    }
+    throw runtime_error("no relation named " + name);
+}
+
+set<Relation> rel::readFromFile(const string& filename) {
+
+    vector<string> data;
+    file::inputStrVecFrom(data, filename);
+
+    set<Relation> rels;
+    string schema;
+    set<string> rawFds;
+
+    for (const string& line : data) {
+        if (!line.empty()) {
+            
+            if (strUtil::contains(line, "(")) {
+                // this is the schema line
+                schema = line;
+            } else {
+                // this is an FD line
+                rawFds.insert(line);
+            }
+
+        } else {
+
+            if (!schema.empty()) {
+                rels.insert(Relation(schema, rawFds));
+            }
+            
+            schema.clear();
+            rawFds.clear();
+        
+        }
+    }
+
+    if (!schema.empty()) {
+        rels.insert(Relation(schema, rawFds));
+    }
+
+    return rels;
+
 }

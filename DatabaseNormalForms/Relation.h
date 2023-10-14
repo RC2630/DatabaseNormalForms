@@ -27,7 +27,8 @@ ostream& operator << (ostream& out, const Relation& rel);
 
 namespace rel {
 
-    // TODO
+    Relation getByName(const set<Relation>& rels, string name);
+    set<Relation> readFromFile(const string& filename);
 
 }
 
