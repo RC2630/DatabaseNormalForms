@@ -2,6 +2,7 @@
 
 int main() {
 
-    // TODO
+    FunctionalDependency fd("Person, Dog, Tank Destroyer -> Cat, Person, Family Member, Goblin");
+    cout << "\n" << fd << "\n";
 
 }
