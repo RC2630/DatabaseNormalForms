@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\general">
+      <UniqueIdentifier>{8f4352a6-a35c-4b33-b51d-ccd2dc90756d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\general">
+      <UniqueIdentifier>{d0ac9491-fe69-44ca-86e7-9ffb38009250}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="general\abstractFunctions.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\ansi_codes.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\binaryUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\file.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\mapUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\numberUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\parseArguments.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\pipe.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\randomUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\setUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\statisticsUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\stringUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\vectorUtility.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\customPrint.h">
+      <Filter>Header Files\general</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="general\binaryUtility.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\file.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\numberUtility.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\parseArguments.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\randomUtility.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\statisticsUtility.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\stringUtility.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="general\customPrint.cpp">
+      <Filter>Source Files\general</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
