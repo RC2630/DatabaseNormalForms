@@ -33,6 +33,14 @@ FunctionalDependency::FunctionalDependency(const string& raw) {
 
 }
 
+bool FunctionalDependency::operator < (const FunctionalDependency& other) const {
+    return tie(left, right) < tie(other.left, other.right);
+}
+
+bool FunctionalDependency::operator == (const FunctionalDependency& other) const {
+    return tie(left, right) == tie(other.left, other.right);
+}
+
 ostream& operator << (ostream& out, const FunctionalDependency& fd) {
 
     string output;
@@ -49,4 +57,9 @@ ostream& operator << (ostream& out, const FunctionalDependency& fd) {
     out << output;
     return out;
 
+}
+
+set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<FunctionalDependency>& fds) {
+    // TODO
+    return fds;
 }

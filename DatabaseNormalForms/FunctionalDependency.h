@@ -15,14 +15,17 @@ struct FunctionalDependency {
     FunctionalDependency(const set<Attribute>& left, const set<Attribute>& right);
     FunctionalDependency(const string& raw);
 
+    bool operator < (const FunctionalDependency& other) const;
+    bool operator == (const FunctionalDependency& other) const;
+
 };
 
 ostream& operator << (ostream& out, const FunctionalDependency& fd);
 
 namespace fd {
 
-    // TODO
-
+    set<FunctionalDependency> findAllFunctionalDependencies(const set<FunctionalDependency>& fds);
+    
 }
 
 #endif
