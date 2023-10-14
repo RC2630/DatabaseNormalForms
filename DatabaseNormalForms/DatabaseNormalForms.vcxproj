@@ -143,6 +143,7 @@
     <ClInclude Include="general\statisticsUtility.h" />
     <ClInclude Include="general\stringUtility.h" />
     <ClInclude Include="general\vectorUtility.h" />
+    <ClInclude Include="help.h" />
     <ClInclude Include="Relation.h" />
     <ClInclude Include="test\test.h" />
   </ItemGroup>

@@ -18,6 +18,8 @@ struct Relation {
     Relation(const string& schema, const set<string>& rawFds);
 
     set<set<Attribute>> findAllKeys() const;
+    void inheritFDsFrom(const Relation& parent);
+
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
 

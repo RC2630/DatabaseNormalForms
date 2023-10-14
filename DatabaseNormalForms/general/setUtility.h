@@ -2,10 +2,17 @@
 #define SET_UTILITY_DOT_H
 
 #include <set>
+#include "vectorUtility.h"
 
 using namespace std;
 
 namespace setUtil {
+
+    template <typename T>
+    ostream& operator << (ostream& out, const set<T>& s) {
+        vecUtil::operator << (out, vector<T>(s.begin(), s.end()));
+        return out;
+    }
 
     template <typename T>
     set<T> set_union(const set<T>& s1, const set<T>& s2) {

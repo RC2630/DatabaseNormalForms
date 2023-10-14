@@ -4,6 +4,7 @@
 #include "general/parseArguments.h"
 #include "general/ansi_codes.h"
 #include "general/file.h"
+#include "general/mapUtility.h"
 
 Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds)
 : name(name), atts(atts) {
@@ -34,6 +35,11 @@ Relation::Relation(const string& schema, const set<string>& rawFds) {
 set<set<Attribute>> Relation::findAllKeys() const {
     // TODO
     return {{"Dog", "Cat", "Person"}};
+}
+
+void Relation::inheritFDsFrom(const Relation& parent) {
+    // TODO
+    this->fds = parent.fds;
 }
 
 ostream& operator << (ostream& out, const Relation& rel) {
@@ -83,8 +89,11 @@ set<Relation> rel::readFromFile(const string& filename) {
     file::inputStrVecFrom(data, filename);
 
     set<Relation> rels;
+    map<string, string> relationToParent;
+
     string schema;
     set<string> rawFds;
+    string parentName;
 
     for (const string& line : data) {
         if (!line.empty()) {
@@ -92,6 +101,9 @@ set<Relation> rel::readFromFile(const string& filename) {
             if (strUtil::contains(line, "(")) {
                 // this is the schema line
                 schema = line;
+            } else if (strUtil::beginsWith(line, "@PARENT")) {
+                // this is an inheritance line
+                parentName = parse::parseArgumentUntilEnd(line);
             } else {
                 // this is an FD line
                 rawFds.insert(line);
@@ -101,18 +113,36 @@ set<Relation> rel::readFromFile(const string& filename) {
 
             if (!schema.empty()) {
                 rels.insert(Relation(schema, rawFds));
+                relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
             }
             
             schema.clear();
             rawFds.clear();
+            parentName.clear();
         
         }
     }
 
     if (!schema.empty()) {
         rels.insert(Relation(schema, rawFds));
+        relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
     }
 
-    return rels;
+    set<Relation> relsWithProcessedParents;
+    
+    for (const Relation& rel : rels) {
+
+        Relation newRel = rel;
+        string currParentName = relationToParent.at(newRel.name);
+
+        if (!currParentName.empty()) {
+            newRel.inheritFDsFrom(rel::getByName(rels, currParentName));
+        }
+
+        relsWithProcessedParents.insert(newRel);
+
+    }
+    
+    return relsWithProcessedParents;
 
 }

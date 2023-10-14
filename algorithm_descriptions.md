@@ -33,6 +33,7 @@
 		- the right side is all the attributes in the closure not in the left side
 		- split this new fd into a set of fds by separating the right side into single attributes
 		- remove any trivial fd from fds (trivial means fd.right is contained inside fd.left)
+		- remove any irrelevant fd from fds (irrelevant means an attribute appears in the fd but not in the relation)
 
 - lossy or lossless
 	- input: R rel, set\<R> decomp

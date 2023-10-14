@@ -10,6 +10,12 @@ FunctionalDependency::FunctionalDependency(const set<Attribute>& left, const set
 FunctionalDependency::FunctionalDependency(const string& raw) {
 
     string arrowSep = " -> ";
+    if (strUtil::contains(raw, "@")) {
+        throw runtime_error(raw); // relation pointer: need to get back console input line with e.what()
+    } else if (!strUtil::contains(raw, arrowSep)) {
+        throw invalid_argument("raw FD does not contain an arrow");
+    }
+
     int indexArrow = raw.find(arrowSep);
     string leftRaw = raw.substr(0, indexArrow);
     string rightRaw = raw.substr(indexArrow + arrowSep.size());
