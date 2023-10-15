@@ -2,6 +2,7 @@
 
 #include "general/parseArguments.h"
 #include "general/stringUtility.h"
+#include "general/setUtility.h"
 
 FunctionalDependency::FunctionalDependency(const set<Attribute>& left, const set<Attribute>& right)
 : left(left), right(right)
@@ -68,4 +69,31 @@ ostream& operator << (ostream& out, const FunctionalDependency& fd) {
 set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<FunctionalDependency>& fds) {
     // TODO
     return fds;
+}
+
+set<Attribute> fd::closure(const set<Attribute>& atts, const set<FunctionalDependency>& fds) {
+    
+    set<Attribute> closureAtts = atts;
+    bool hasChanged = true;
+
+    while (hasChanged) {
+
+        hasChanged = false;
+        for (const FunctionalDependency& fd : fds) {
+            if (setUtil::isSubset(fd.left, closureAtts)) {
+
+                int sizeBeforeInsert = closureAtts.size();
+                closureAtts.insert(fd.right.begin(), fd.right.end());
+                
+                if (sizeBeforeInsert < closureAtts.size()) {
+                    hasChanged = true;
+                }
+
+            }
+        }
+
+    }
+
+    return closureAtts;
+
 }

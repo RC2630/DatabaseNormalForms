@@ -17,7 +17,9 @@ namespace help {
         "/quit = exit program\n\n"
 
         "/list = display all relations\n"
-        "/view <name> = display information about the relation with given name";
+        "/view <name> = display information about the relation with given name\n\n"
+        
+        "/closure = take closure of a set of attributes with respect to a set of functional dependencies";
 
     const string FILE_HELP =
 

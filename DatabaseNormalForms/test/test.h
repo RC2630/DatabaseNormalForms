@@ -8,6 +8,8 @@ namespace test {
     void testFDandRelationIO();
     void testReadFromFile();
 
+    void testClosure();
+
 }
 
 #endif

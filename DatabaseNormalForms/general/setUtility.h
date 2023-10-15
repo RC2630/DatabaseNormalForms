@@ -48,6 +48,21 @@ namespace setUtil {
         return result;
     }
 
+    template <typename T>
+    bool isSubset(const set<T>& sub, const set<T>& full, bool strict = false) {
+        for (const T& element : sub) {
+            if (!full.count(element)) {
+                return false;
+            }
+        }
+        return strict ? (sub.size() < full.size()) : true;
+    }
+
+    template <typename T>
+    bool isSuperset(const set<T>& super, const set<T>& orig, bool strict = false) {
+        return isSubset(orig, super, strict);
+    }
+
 }
 
 #endif

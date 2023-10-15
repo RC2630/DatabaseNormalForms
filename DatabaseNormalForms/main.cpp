@@ -131,6 +131,14 @@ void view(const string& relname) {
     }
 }
 
+void closure() {
+    cout << "\nEnter a set of attributes: ";
+    set<Attribute> atts = inputAttributeSet();
+    cout << "\nEnter a set of functional dependencies:\n";
+    set<FunctionalDependency> fds = inputFDset();
+    cout << "\nThe closure is: " << ANSI_BLUE << fd::closure(atts, fds) << ANSI_NORMAL << "\n";
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -155,6 +163,8 @@ void run() {
             list();
         } else if (parse::commandIs(command, "/view") && parse::numArguments(command) == 1) {
             view(parse::parseArgument(command));
+        } else if (parse::commandIs(command, "/closure")) {
+            closure();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

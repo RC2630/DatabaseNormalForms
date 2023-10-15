@@ -25,6 +25,7 @@ ostream& operator << (ostream& out, const FunctionalDependency& fd);
 namespace fd {
 
     set<FunctionalDependency> findAllFunctionalDependencies(const set<FunctionalDependency>& fds);
+    set<Attribute> closure(const set<Attribute>& atts, const set<FunctionalDependency>& fds);
     
 }
 
