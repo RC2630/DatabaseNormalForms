@@ -19,6 +19,12 @@
     <Filter Include="Header Files\general">
       <UniqueIdentifier>{d0ac9491-fe69-44ca-86e7-9ffb38009250}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\test">
+      <UniqueIdentifier>{10b90aa7-8a47-4bda-a529-8a0f1f99d0d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test">
+      <UniqueIdentifier>{733bcf57-9b9f-418f-a2ec-619259f8c540}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="general\abstractFunctions.h">
@@ -69,11 +75,11 @@
     <ClInclude Include="Relation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test\test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="help.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test\test.h">
+      <Filter>Header Files\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +117,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
