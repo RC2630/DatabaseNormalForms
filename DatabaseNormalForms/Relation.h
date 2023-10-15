@@ -19,6 +19,7 @@ struct Relation {
 
     set<set<Attribute>> findAllKeys() const;
     void inheritFDsFrom(const Relation& parent, bool removeIrrelevant = true);
+    bool isDecompLossless(const set<Relation>& decomps);
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;

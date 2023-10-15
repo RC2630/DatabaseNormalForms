@@ -145,6 +145,19 @@ void findall() {
     cout << "\nHere are the resulting functional dependencies:" << ANSI_BLUE << fd::findAllFunctionalDependencies(fds) << ANSI_NORMAL;
 }
 
+void isLossless() {
+    try {
+        cout << "\nEnter the name of the full relation: ";
+        Relation full = inputRelation();
+        cout << "\Enter the names of the relations that comprise the decomposition of the full relation: ";
+        set<Relation> decomp = inputRelationSet();
+        cout << ANSI_BLUE << "\nThe given decomposition is " << (full.isDecompLossless(decomp) ? "" : "NOT ")
+             << "a lossless decomposition of the full relation.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -173,6 +186,8 @@ void run() {
             closure();
         } else if (parse::commandIs(command, "/findall")) {
             findall();
+        } else if (parse::commandIs(command, "/islossless")) {
+            isLossless();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

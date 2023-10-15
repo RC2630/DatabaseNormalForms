@@ -11,6 +11,7 @@ namespace test {
     void testClosure();
     void testFindAllFDs();
     void testRemoveIrrelevant();
+    void testIsLossless();
 
 }
 

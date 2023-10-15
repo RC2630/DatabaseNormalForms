@@ -5,6 +5,8 @@
 #include <map>
 #include <vector>
 #include <functional>
+#include <set>
+#include <sstream>
 
 using namespace std;
 
@@ -46,6 +48,24 @@ namespace cprint {
             printFunc(out, v.at(i)) << ", ";
         }
         printFunc(out, v.back()) << "]";
+        return out;
+    }
+
+    // the purpose of this function is to display sets of custom objects
+    template <typename T>
+    ostream& print(ostream& out, const set<T>& s, ostream& (*printFunc) (ostream&, const T&)) {
+        stringstream sout;
+        cprint::print(sout, vector<T>(s.begin(), s.end()), printFunc);
+        out << "{" << sout.str().substr(1, sout.str().size() - 2) << "}";
+        return out;
+    }
+
+    // the purpose of this function is to display sets of custom objects (_f version)
+    template <typename T>
+    ostream& print_f(ostream& out, const set<T>& s, function<ostream& (ostream&, const T&)> printFunc) {
+        stringstream sout;
+        cprint::print(sout, vector<T>(s.begin(), s.end()), printFunc);
+        out << "{" << sout.str().substr(1, sout.str().size() - 2) << "}";
         return out;
     }
 

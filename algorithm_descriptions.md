@@ -41,7 +41,7 @@
 	- steps:
 		- take the intersection of the relations in decomp
 		- find the closure of the intersection
-		- if any of the relations in decomp is a subset of the closure, then it's not lossless
+		- if any of the relations in decomp is a subset of the closure, then it's lossless
 
 - is a superkey
 	- input: R rel, set\<A> key

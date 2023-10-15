@@ -78,3 +78,13 @@ void test::testRemoveIrrelevant() {
          << "\nsimplified FD's:\n" << (r.fds = fd::findAllFunctionalDependencies(r.fds))
          << "\nrelevant FD's:\n" << (r.fds = fd::removeIrrelevantFDs(r.fds, r.atts)) << "\n";
 }
+
+void test::testIsLossless() {
+    set<Relation> rels = rel::readFromFile("file/testing/test_is_lossless.txt");
+    Relation full = rel::getByName(rels, "SuperRentInfo");
+    set<Relation> lossy = {rel::getByName(rels, "SI1"), rel::getByName(rels, "SI2")};
+    set<Relation> lossless = {rel::getByName(rels, "SI3"), rel::getByName(rels, "SI4")};
+    cout << boolalpha
+         << "\nis 'lossy' a lossless decomposition for 'full'? " << full.isDecompLossless(lossy)
+         << "\nis 'lossless' a lossless decomposition for 'full'? " << full.isDecompLossless(lossless) << "\n";
+}

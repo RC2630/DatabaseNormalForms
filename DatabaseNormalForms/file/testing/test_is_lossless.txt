@@ -1,0 +1,19 @@
+SuperRentInfo(I, N, E, S, ED, C, CN, B, T, P)
+I -> N, E
+CN -> I
+B -> C
+CN, B -> T
+CN, B, T -> S, ED
+P -> I, CN
+
+SI1(I, N, E, S, C, B)
+@PARENT SuperRentInfo
+
+SI2(C, P, T, ED, CN, B)
+@PARENT SuperRentInfo
+
+SI3(I, N, E, S, C, CN, B)
+@PARENT SuperRentInfo
+
+SI4(C, P, T, ED, CN, B)
+@PARENT SuperRentInfo

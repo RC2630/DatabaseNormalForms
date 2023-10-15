@@ -5,6 +5,8 @@
 #include "general/ansi_codes.h"
 #include "general/file.h"
 #include "general/mapUtility.h"
+#include "general/setUtility.h"
+#include "general/abstractFunctions.h"
 
 Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess)
 : name(name), atts(atts) {
@@ -51,6 +53,23 @@ void Relation::inheritFDsFrom(const Relation& parent, bool removeIrrelevant) {
     if (removeIrrelevant) {
         this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
     }
+}
+
+bool Relation::isDecompLossless(const set<Relation>& decomps) {
+
+    set<Attribute> isecAtts = setUtil::intersect(absFunc::map_f<Relation, set<Attribute>>(setUtil::setToVector(decomps), [] (const Relation& rel) {
+        return rel.atts;
+    }));
+    set<Attribute> closureAtts = fd::closure(isecAtts, this->fds);
+
+    for (const Relation& rel : decomps) {
+        if (setUtil::isSubset(rel.atts, closureAtts)) {
+            return true;
+        }
+    }
+
+    return false;
+
 }
 
 bool Relation::operator < (const Relation& other) const {

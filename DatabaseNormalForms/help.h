@@ -20,7 +20,8 @@ namespace help {
         "/view <name> = display information about the relation with given name\n\n"
         
         "/closure = take closure of a set of attributes with respect to a set of functional dependencies\n"
-        "/findall = find all implicit FD's, transform them into new FD's with single-attribute right sides, and remove trivial FD's";
+        "/findall = find all implicit FD's, transform them into new FD's with single-attribute right sides, and remove trivial FD's\n"
+        "/islossless = check if a decomposition (set of relations) for a relation is a lossless one or not";
 
     const string FILE_HELP =
 
