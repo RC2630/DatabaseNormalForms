@@ -1,0 +1,6 @@
+Rel(A, B, C, D, E)
+A, B -> C
+B, C -> D
+E, C -> E, B, D
+E, F -> D
+A, B, C -> F, E

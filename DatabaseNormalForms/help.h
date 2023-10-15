@@ -19,7 +19,8 @@ namespace help {
         "/list = display all relations\n"
         "/view <name> = display information about the relation with given name\n\n"
         
-        "/closure = take closure of a set of attributes with respect to a set of functional dependencies";
+        "/closure = take closure of a set of attributes with respect to a set of functional dependencies\n"
+        "/findall = find all implicit FD's, transform them into new FD's with single-attribute right sides, and remove trivial FD's";
 
     const string FILE_HELP =
 

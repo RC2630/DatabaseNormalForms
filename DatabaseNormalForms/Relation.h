@@ -14,11 +14,11 @@ struct Relation {
     set<FunctionalDependency> fds;
     bool printFDs = true;
 
-    Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds);
-    Relation(const string& schema, const set<string>& rawFds);
+    Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess = true);
+    Relation(const string& schema, const set<string>& rawFds, bool preprocess = true);
 
     set<set<Attribute>> findAllKeys() const;
-    void inheritFDsFrom(const Relation& parent);
+    void inheritFDsFrom(const Relation& parent, bool removeIrrelevant = true);
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
@@ -26,11 +26,12 @@ struct Relation {
 };
 
 ostream& operator << (ostream& out, const Relation& rel);
+ostream& operator << (ostream& out, const set<Relation>& rels);
 
 namespace rel {
 
     Relation getByName(const set<Relation>& rels, string name);
-    set<Relation> readFromFile(const string& filename);
+    set<Relation> readFromFile(const string& filename, bool preprocess = true);
 
 }
 

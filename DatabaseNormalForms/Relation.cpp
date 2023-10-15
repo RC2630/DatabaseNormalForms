@@ -6,12 +6,17 @@
 #include "general/file.h"
 #include "general/mapUtility.h"
 
-Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds)
+Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess)
 : name(name), atts(atts) {
-    this->fds = fd::findAllFunctionalDependencies(fds);
+    if (preprocess) {
+        this->fds = fd::findAllFunctionalDependencies(fds);
+        this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
+    } else {
+        this->fds = fds;
+    }
 }
 
-Relation::Relation(const string& schema, const set<string>& rawFds) {
+Relation::Relation(const string& schema, const set<string>& rawFds, bool preprocess) {
     
     this->name = strUtil::removeAllAfterChar(schema, '(');
     string raw = strUtil::removeAllBeforeChar(schema, '(', true);
@@ -28,7 +33,11 @@ Relation::Relation(const string& schema, const set<string>& rawFds) {
     for (const string& rawFd : rawFds) {
         this->fds.insert(FunctionalDependency(rawFd));
     }
-    this->fds = fd::findAllFunctionalDependencies(this->fds);
+
+    if (preprocess) {
+        this->fds = fd::findAllFunctionalDependencies(this->fds);
+        this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
+    }
 
 }
 
@@ -37,9 +46,19 @@ set<set<Attribute>> Relation::findAllKeys() const {
     return {{"Dog", "Cat", "Person"}};
 }
 
-void Relation::inheritFDsFrom(const Relation& parent) {
-    // TODO
+void Relation::inheritFDsFrom(const Relation& parent, bool removeIrrelevant) {
     this->fds = parent.fds;
+    if (removeIrrelevant) {
+        this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
+    }
+}
+
+bool Relation::operator < (const Relation& other) const {
+    return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
+}
+
+bool Relation::operator == (const Relation& other) const {
+    return tie(name, atts, fds) == tie(other.name, other.atts, other.fds);
 }
 
 ostream& operator << (ostream& out, const Relation& rel) {
@@ -66,12 +85,15 @@ ostream& operator << (ostream& out, const Relation& rel) {
 
 }
 
-bool Relation::operator < (const Relation& other) const {
-    return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
-}
-
-bool Relation::operator == (const Relation& other) const {
-    return tie(name, atts, fds) == tie(other.name, other.atts, other.fds);
+ostream& operator << (ostream& out, const set<Relation>& rels) {
+    if (rels.empty()) {
+        out << ANSI_RED << "\nThere are no relations to display.\n" << ANSI_NORMAL;
+    } else {
+        for (const Relation& rel : rels) {
+            out << "\n" << rel << "\n";
+        }
+    }
+    return out;
 }
 
 Relation rel::getByName(const set<Relation>& rels, string name) {
@@ -83,7 +105,7 @@ Relation rel::getByName(const set<Relation>& rels, string name) {
     throw runtime_error("no relation named " + name);
 }
 
-set<Relation> rel::readFromFile(const string& filename) {
+set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
 
     vector<string> data;
     file::inputStrVecFrom(data, filename);
@@ -112,7 +134,7 @@ set<Relation> rel::readFromFile(const string& filename) {
         } else {
 
             if (!schema.empty()) {
-                rels.insert(Relation(schema, rawFds));
+                rels.insert(Relation(schema, rawFds, preprocess));
                 relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
             }
             
@@ -124,7 +146,7 @@ set<Relation> rel::readFromFile(const string& filename) {
     }
 
     if (!schema.empty()) {
-        rels.insert(Relation(schema, rawFds));
+        rels.insert(Relation(schema, rawFds, preprocess));
         relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
     }
 
@@ -136,7 +158,7 @@ set<Relation> rel::readFromFile(const string& filename) {
         string currParentName = relationToParent.at(newRel.name);
 
         if (!currParentName.empty()) {
-            newRel.inheritFDsFrom(rel::getByName(rels, currParentName));
+            newRel.inheritFDsFrom(rel::getByName(rels, currParentName), preprocess);
         }
 
         relsWithProcessedParents.insert(newRel);

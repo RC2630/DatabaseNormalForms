@@ -47,3 +47,34 @@ void test::testClosure() {
     cout << "\n";
 
 }
+
+void test::testFindAllFDs() {
+
+    set<FunctionalDependency> orig = {
+        //FunctionalDependency("A, B -> C"),
+        //FunctionalDependency("C -> D"),
+        FunctionalDependency("sname -> city"),
+        FunctionalDependency("city -> status"),
+        FunctionalDependency("p# -> pname"),
+        FunctionalDependency("sname, p# -> qty"),
+        //FunctionalDependency("A -> A")
+    };
+
+    cout << "\noriginal FD's:\n";
+    for (const FunctionalDependency& fd : orig) {
+        cout << fd << "\n";
+    }
+
+    cout << "\nnew FD's:\n";
+    for (const FunctionalDependency& fd : fd::findAllFunctionalDependencies(orig)) {
+        cout << fd << "\n";
+    }
+
+}
+
+void test::testRemoveIrrelevant() {
+    Relation r = *rel::readFromFile("file/testing/test_remove_irrelevant.txt", false).begin();
+    cout << "\noriginal FD's:\n" << r.fds
+         << "\nsimplified FD's:\n" << (r.fds = fd::findAllFunctionalDependencies(r.fds))
+         << "\nrelevant FD's:\n" << (r.fds = fd::removeIrrelevantFDs(r.fds, r.atts)) << "\n";
+}

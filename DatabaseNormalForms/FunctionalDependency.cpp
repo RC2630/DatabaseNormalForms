@@ -3,6 +3,7 @@
 #include "general/parseArguments.h"
 #include "general/stringUtility.h"
 #include "general/setUtility.h"
+#include "general/ansi_codes.h"
 
 FunctionalDependency::FunctionalDependency(const set<Attribute>& left, const set<Attribute>& right)
 : left(left), right(right)
@@ -66,9 +67,50 @@ ostream& operator << (ostream& out, const FunctionalDependency& fd) {
 
 }
 
+ostream& operator << (ostream& out, const set<FunctionalDependency>& fds) {
+    if (fds.empty()) {
+        out << ANSI_RED << "\nThere are no functional dependencies to display.\n" << ANSI_NORMAL;
+    } else {
+        out << "\n";
+        for (const FunctionalDependency& fd : fds) {
+            out << fd << "\n";
+        }
+    }
+    return out;
+}
+
 set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<FunctionalDependency>& fds) {
-    // TODO
-    return fds;
+
+    set<FunctionalDependency> resultStep1, resultStep2;
+
+    // part 1: find implicit FD's (also removes trivial FD's)
+    for (const FunctionalDependency& fd : fds) {
+        set<Attribute> closureAtts = closure(fd.left, fds);
+        set<Attribute> newRight = setUtil::difference(closureAtts, fd.left);
+        if (newRight.size() > 0) {
+            resultStep1.insert(FunctionalDependency(fd.left, newRight));
+        }
+    }
+
+    // part 2: split multiple-right-side FD's into multiple FD's
+    for (const FunctionalDependency& fd : resultStep1) {
+        for (const Attribute& att : fd.right) {
+            resultStep2.insert(FunctionalDependency(fd.left, {att}));
+        }
+    }
+
+    return resultStep2;
+
+}
+
+set<FunctionalDependency> fd::removeIrrelevantFDs(const set<FunctionalDependency>& fds, const set<Attribute>& atts) {
+    set<FunctionalDependency> relevantFDs;
+    for (const FunctionalDependency& fd : fds) {
+        if (setUtil::isSubset(setUtil::set_union(fd.left, fd.right), atts)) {
+            relevantFDs.insert(fd);
+        }
+    }
+    return relevantFDs;
 }
 
 set<Attribute> fd::closure(const set<Attribute>& atts, const set<FunctionalDependency>& fds) {

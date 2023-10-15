@@ -139,6 +139,12 @@ void closure() {
     cout << "\nThe closure is: " << ANSI_BLUE << fd::closure(atts, fds) << ANSI_NORMAL << "\n";
 }
 
+void findall() {
+    cout << "\nEnter a set of functional dependencies:\n";
+    set<FunctionalDependency> fds = inputFDset();
+    cout << "\nHere are the resulting functional dependencies:" << ANSI_BLUE << fd::findAllFunctionalDependencies(fds) << ANSI_NORMAL;
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -165,6 +171,8 @@ void run() {
             view(parse::parseArgument(command));
         } else if (parse::commandIs(command, "/closure")) {
             closure();
+        } else if (parse::commandIs(command, "/findall")) {
+            findall();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

@@ -9,6 +9,8 @@ namespace test {
     void testReadFromFile();
 
     void testClosure();
+    void testFindAllFDs();
+    void testRemoveIrrelevant();
 
 }
 
