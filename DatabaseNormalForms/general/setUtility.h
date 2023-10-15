@@ -15,7 +15,7 @@ namespace setUtil {
     }
 
     template <typename T>
-    set<T> set_union(const set<T>& s1, const set<T>& s2) {
+    set<T> setUnion(const set<T>& s1, const set<T>& s2) {
         set<T> result;
         for (const T& element : s1) {
             result.insert(element);

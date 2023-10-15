@@ -106,7 +106,7 @@ set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<Functional
 set<FunctionalDependency> fd::removeIrrelevantFDs(const set<FunctionalDependency>& fds, const set<Attribute>& atts) {
     set<FunctionalDependency> relevantFDs;
     for (const FunctionalDependency& fd : fds) {
-        if (setUtil::isSubset(setUtil::set_union(fd.left, fd.right), atts)) {
+        if (setUtil::isSubset(setUtil::setUnion(fd.left, fd.right), atts)) {
             relevantFDs.insert(fd);
         }
     }
