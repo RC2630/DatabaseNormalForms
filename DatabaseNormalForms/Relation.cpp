@@ -7,6 +7,7 @@
 #include "general/mapUtility.h"
 #include "general/setUtility.h"
 #include "general/abstractFunctions.h"
+#include "general/statisticsUtility.h"
 
 #include <queue>
 
@@ -152,6 +153,31 @@ bool Relation::isKey(const set<Attribute>& atts) const {
     }
 
     return true;
+
+}
+
+set<set<Attribute>> Relation::findAllSuperkeys() const {
+
+    set<set<Attribute>> keys = this->findAllKeys();
+    set<set<Attribute>> superkeys;
+
+    for (const set<Attribute>& key : keys) {
+
+        vector<Attribute> notInKey = setUtil::setToVector(setUtil::difference(this->atts, key));
+        vector<set<int>> combinations = statUtil::generateCombinationsUpTo(notInKey.size());
+        vector<set<Attribute>> combAtts = absFunc::map_f<set<int>, set<Attribute>>(combinations, [&notInKey] (const set<int>& comb) {
+            return setUtil::vectorToSet(absFunc::map_f<int, Attribute>(setUtil::setToVector(comb), [&notInKey] (int index) {
+                return notInKey.at(index - 1);
+            }));
+        });
+
+        for (const set<Attribute>& currCombAtts : combAtts) {
+            superkeys.insert(setUtil::setUnion(key, currCombAtts));
+        }
+
+    }
+
+    return superkeys;
 
 }
 

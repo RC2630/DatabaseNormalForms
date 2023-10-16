@@ -22,6 +22,7 @@ struct Relation {
     bool isDecompLossless(const set<Relation>& decomps) const;
     bool isSuperkey(const set<Attribute>& atts) const;
     bool isKey(const set<Attribute>& atts) const;
+    set<set<Attribute>> findAllSuperkeys() const;
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;

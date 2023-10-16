@@ -197,6 +197,20 @@ void findAllKeys() {
     }
 }
 
+void findAllSuperkeys() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "\nHere are all the superkeys for your relation:\n" << ANSI_BLUE;
+        for (const set<Attribute>& superkey : rel.findAllSuperkeys()) {
+            cout << superkey << "\n";
+        }
+        cout << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -233,6 +247,8 @@ void run() {
             isKey();
         } else if (parse::commandIs(command, "/findkeys")) {
             findAllKeys();
+        } else if (parse::commandIs(command, "/findsuperkeys")) {
+            findAllSuperkeys();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

@@ -106,7 +106,7 @@ void test::testKeysAndSuperkeys() {
     }
 }
 
-void test::testFindAllKeys() {
+void test::testFindAllKeysAndSuperkeys() {
 
     set<Relation> relationsWithPreprocessing = rel::readFromFile("file/testing/test_find_all_keys.txt");
     set<Relation> relationsWithoutPreprocessing = rel::readFromFile("file/testing/test_find_all_keys.txt", false);
@@ -114,17 +114,27 @@ void test::testFindAllKeys() {
         return r.name;
     });
 
-    auto printAttributeSet = [] (
-        ostream& out, const set<Attribute>& atts
-    ) -> ostream& {
+    auto printAttributeSet = [] (ostream& out, const set<Attribute>& atts) -> ostream& {
         return out << atts;
+    };
+
+    auto displayKeys = [printAttributeSet] (const set<set<Attribute>>& keys, string keyOrSuperkey) -> void {
+        if (keys.size() > 20) {
+            cout << "(too many " << keyOrSuperkey << "s to display: there are " << keys.size() << " " << keyOrSuperkey << "s)";
+        } else {
+            cprint::print<set<Attribute>>(cout, keys, printAttributeSet);
+        }
     };
 
     for (string name : relnames) {
         cout << "\nkeys for " << name << " (with preprocessing):\n";
-        cprint::print<set<Attribute>>(cout, rel::getByName(relationsWithPreprocessing, name).findAllKeys(), printAttributeSet);
+        displayKeys(rel::getByName(relationsWithPreprocessing, name).findAllKeys(), "key");
         cout << "\n\nkeys for " << name << " (without preprocessing):\n";
-        cprint::print<set<Attribute>>(cout, rel::getByName(relationsWithoutPreprocessing, name).findAllKeys(), printAttributeSet);
+        displayKeys(rel::getByName(relationsWithoutPreprocessing, name).findAllKeys(), "key");
+        cout << "\n\nsuperkeys for " << name << " (with preprocessing):\n";
+        displayKeys(rel::getByName(relationsWithPreprocessing, name).findAllSuperkeys(), "superkey");
+        cout << "\n\nsuperkeys for " << name << " (without preprocessing):\n";
+        displayKeys(rel::getByName(relationsWithoutPreprocessing, name).findAllSuperkeys(), "superkey");
         cout << "\n";
     }
 

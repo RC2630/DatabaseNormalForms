@@ -24,7 +24,8 @@ namespace help {
         "/islossless = check if a decomposition (set of relations) for a relation is a lossless one or not\n"
         "/issuperkey = check if a set of attributes form a superkey for a relation\n"
         "/iskey = check if a set of attributes form a (minimal) key for a relation\n"
-        "/findkeys = find all (minimal) keys of a relation";
+        "/findkeys = find all (minimal) keys of a relation\n"
+        "/findsuperkeys = find all superkeys of a relation";
 
     const string FILE_HELP =
 
