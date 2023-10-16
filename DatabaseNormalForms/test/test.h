@@ -13,6 +13,7 @@ namespace test {
     void testRemoveIrrelevant();
     void testIsLossless();
     void testKeysAndSuperkeys();
+    void testFindAllKeys();
 
 }
 

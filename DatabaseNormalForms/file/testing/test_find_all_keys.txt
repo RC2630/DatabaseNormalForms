@@ -1,0 +1,17 @@
+R1(A, B, C, D)
+A, B -> C
+C -> B, D
+
+R2(A, B, C, D, E)
+D -> C
+C, E -> A
+D -> A
+A, E -> D
+
+SuperRentInfo(I, N, E, S, ED, C, CN, B, T, P)
+I -> N, E
+CN -> I
+B -> C
+CN, B -> T
+CN, B, T -> S, ED
+P -> I, CN

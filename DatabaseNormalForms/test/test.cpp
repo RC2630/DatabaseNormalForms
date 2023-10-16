@@ -1,8 +1,11 @@
 #include "test.h"
 
 #include "../general/setUtility.h"
+#include "../general/abstractFunctions.h"
+#include "../general/customPrint.h"
 
 using setUtil::operator<<;
+using cprint::operator<<;
 
 void test::testFDandRelationIO() {
 
@@ -101,4 +104,28 @@ void test::testKeysAndSuperkeys() {
         cout << "\n" << potentialKey << " is a superkey? " << supplierPart.isSuperkey(potentialKey)
              << "\n" << potentialKey << " is a key? " << supplierPart.isKey(potentialKey) << "\n";
     }
+}
+
+void test::testFindAllKeys() {
+
+    set<Relation> relationsWithPreprocessing = rel::readFromFile("file/testing/test_find_all_keys.txt");
+    set<Relation> relationsWithoutPreprocessing = rel::readFromFile("file/testing/test_find_all_keys.txt", false);
+    vector<string> relnames = absFunc::map_f<Relation, string>(setUtil::setToVector(relationsWithPreprocessing), [] (const Relation& r) {
+        return r.name;
+    });
+
+    auto printAttributeSet = [] (
+        ostream& out, const set<Attribute>& atts
+    ) -> ostream& {
+        return out << atts;
+    };
+
+    for (string name : relnames) {
+        cout << "\nkeys for " << name << " (with preprocessing):\n";
+        cprint::print<set<Attribute>>(cout, rel::getByName(relationsWithPreprocessing, name).findAllKeys(), printAttributeSet);
+        cout << "\n\nkeys for " << name << " (without preprocessing):\n";
+        cprint::print<set<Attribute>>(cout, rel::getByName(relationsWithoutPreprocessing, name).findAllKeys(), printAttributeSet);
+        cout << "\n";
+    }
+
 }

@@ -63,6 +63,7 @@
 	- output: set\<set\<A>>
 	- steps:
 		- loop through the rel.fds and place each attribute into one of {left, both, right} based on where it appears in the fds
+		- any attribute that does not appear in any fd is put into left
 		- take the closure of all atributes in left, and check if that is key
 		- if it is, then that is the only key
 		- if not, then start adding attributes from both one at a time, and each time check if it is a key

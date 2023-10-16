@@ -8,6 +8,8 @@
 #include "general/setUtility.h"
 #include "general/abstractFunctions.h"
 
+#include <queue>
+
 Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess)
 : name(name), atts(atts) {
     if (preprocess) {
@@ -44,8 +46,66 @@ Relation::Relation(const string& schema, const set<string>& rawFds, bool preproc
 }
 
 set<set<Attribute>> Relation::findAllKeys() const {
-    // TODO
-    return {{"Dog", "Cat", "Person"}};
+
+    set<Attribute> left, middle;
+
+    auto appearsOnLeft = [this] (Attribute att) -> bool {
+        for (const FunctionalDependency& fd : this->fds) {
+            if (fd.left.count(att)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    auto appearsOnRight = [this] (Attribute att) -> bool {
+        for (const FunctionalDependency& fd : this->fds) {
+            if (fd.right.count(att)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    auto belongsToLeft = [this, appearsOnLeft, appearsOnRight] (Attribute att) -> bool {
+        return !appearsOnRight(att);
+    };
+
+    auto belongsToMiddle = [this, appearsOnLeft, appearsOnRight] (Attribute att) -> bool {
+        return appearsOnLeft(att) && appearsOnRight(att);
+    };
+
+    for (const Attribute& att : this->atts) {
+        if (belongsToLeft(att)) {
+            left.insert(att);
+        } else if (belongsToMiddle(att)) {
+            middle.insert(att);
+        }
+    }
+
+    set<set<Attribute>> keys;
+    queue<set<Attribute>> toTry;
+    toTry.push(left);
+
+    auto pushAllNextLayer = [this, &toTry, &middle] (const set<Attribute>& currTry) -> void {
+        set<Attribute> potentialToAdds = setUtil::difference(middle, currTry);
+        for (const Attribute& att : potentialToAdds) {
+            toTry.push(setUtil::setUnion(currTry, {att}));
+        }
+    };
+
+    while (!toTry.empty()) {
+        set<Attribute> currTry = toTry.front();
+        toTry.pop();
+        if (this->isKey(currTry)) {
+            keys.insert(currTry);
+        } else {
+            pushAllNextLayer(currTry);
+        }
+    }
+
+    return keys;
+
 }
 
 void Relation::inheritFDsFrom(const Relation& parent, bool removeIrrelevant) {
