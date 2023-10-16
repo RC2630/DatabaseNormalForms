@@ -55,7 +55,7 @@ void Relation::inheritFDsFrom(const Relation& parent, bool removeIrrelevant) {
     }
 }
 
-bool Relation::isDecompLossless(const set<Relation>& decomps) {
+bool Relation::isDecompLossless(const set<Relation>& decomps) const {
 
     set<Attribute> isecAtts = setUtil::intersect(absFunc::map_f<Relation, set<Attribute>>(setUtil::setToVector(decomps), [] (const Relation& rel) {
         return rel.atts;
@@ -72,12 +72,12 @@ bool Relation::isDecompLossless(const set<Relation>& decomps) {
 
 }
 
-bool Relation::isSuperkey(const set<Attribute>& atts) {
+bool Relation::isSuperkey(const set<Attribute>& atts) const {
     set<Attribute> closureAtts = fd::closure(atts, this->fds);
     return closureAtts == this->atts;
 }
 
-bool Relation::isKey(const set<Attribute>& atts) {
+bool Relation::isKey(const set<Attribute>& atts) const {
 
     if (!isSuperkey(atts)) {
         return false;
