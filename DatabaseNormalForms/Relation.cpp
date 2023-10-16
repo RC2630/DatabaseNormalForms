@@ -72,6 +72,29 @@ bool Relation::isDecompLossless(const set<Relation>& decomps) {
 
 }
 
+bool Relation::isSuperkey(const set<Attribute>& atts) {
+    set<Attribute> closureAtts = fd::closure(atts, this->fds);
+    return closureAtts == this->atts;
+}
+
+bool Relation::isKey(const set<Attribute>& atts) {
+
+    if (!isSuperkey(atts)) {
+        return false;
+    }
+
+    for (const Attribute& att : atts) {
+        set<Attribute> attsRemove1 = atts;
+        attsRemove1.erase(att);
+        if (isSuperkey(attsRemove1)) {
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

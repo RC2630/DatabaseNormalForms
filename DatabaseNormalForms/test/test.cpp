@@ -88,3 +88,17 @@ void test::testIsLossless() {
          << "\nis 'lossy' a lossless decomposition for 'full'? " << full.isDecompLossless(lossy)
          << "\nis 'lossless' a lossless decomposition for 'full'? " << full.isDecompLossless(lossless) << "\n";
 }
+
+void test::testKeysAndSuperkeys() {
+    cout << boolalpha;
+    Relation supplierPart = *rel::readFromFile("file/testing/test_keys_and_superkeys.txt").begin();
+    set<set<Attribute>> potentialKeys = {
+        {"sname"},
+        {"sname", "p#"},
+        {"sname", "p#", "pname"}
+    };
+    for (const set<Attribute>& potentialKey : potentialKeys) {
+        cout << "\n" << potentialKey << " is a superkey? " << supplierPart.isSuperkey(potentialKey)
+             << "\n" << potentialKey << " is a key? " << supplierPart.isKey(potentialKey) << "\n";
+    }
+}

@@ -1,0 +1,5 @@
+SupplierPart(sname, city, status, p#, pname, qty)
+sname -> city
+city -> status
+p# -> pname
+sname, p# -> qty

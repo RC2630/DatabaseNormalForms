@@ -149,10 +149,35 @@ void isLossless() {
     try {
         cout << "\nEnter the name of the full relation: ";
         Relation full = inputRelation();
-        cout << "\Enter the names of the relations that comprise the decomposition of the full relation: ";
+        cout << "Enter the names of the relations that comprise the decomposition of the full relation: ";
         set<Relation> decomp = inputRelationSet();
         cout << ANSI_BLUE << "\nThe given decomposition is " << (full.isDecompLossless(decomp) ? "" : "NOT ")
              << "a lossless decomposition of the full relation.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
+void isSuperkey() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "Enter the attributes that you would like to check if they form a superkey: ";
+        set<Attribute> atts = inputAttributeSet();
+        cout << ANSI_BLUE << "\nThe given attributes " << (rel.isSuperkey(atts) ? "" : "do NOT ")
+             << "form a superkey of the relation.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
+void isKey() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "Enter the attributes that you would like to check if they form a key: ";
+        set<Attribute> atts = inputAttributeSet();
+        cout << ANSI_BLUE << "\nThe given attributes " << (rel.isKey(atts) ? "" : "do NOT ") << "form a key of the relation.\n" << ANSI_NORMAL;
     } catch (const runtime_error& e) {
         cout << noRelationErrorMessage(e.what());
     }
@@ -188,6 +213,10 @@ void run() {
             findall();
         } else if (parse::commandIs(command, "/islossless")) {
             isLossless();
+        } else if (parse::commandIs(command, "/issuperkey")) {
+            isSuperkey();
+        } else if (parse::commandIs(command, "/iskey")) {
+            isKey();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

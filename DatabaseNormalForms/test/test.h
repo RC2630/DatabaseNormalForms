@@ -12,6 +12,7 @@ namespace test {
     void testFindAllFDs();
     void testRemoveIrrelevant();
     void testIsLossless();
+    void testKeysAndSuperkeys();
 
 }
 

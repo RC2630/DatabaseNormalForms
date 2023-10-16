@@ -20,6 +20,8 @@ struct Relation {
     set<set<Attribute>> findAllKeys() const;
     void inheritFDsFrom(const Relation& parent, bool removeIrrelevant = true);
     bool isDecompLossless(const set<Relation>& decomps);
+    bool isSuperkey(const set<Attribute>& atts);
+    bool isKey(const set<Attribute>& atts);
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
