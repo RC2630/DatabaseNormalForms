@@ -85,3 +85,68 @@ vector<vector<int>> statUtil::generatePermutations(int n) {
         return result;
     }
 }
+
+// gives the next combination (see below)
+// example: nextCombination(5, {1, 2, 4}) = {1, 2, 5}; nextCombination(5, {1, 2, 5}) = {1, 3, 4}
+set<int> statUtil::nextCombination(int n, const set<int>& currCombination) {
+
+    vector<int> combination = setUtil::setToVector(currCombination);
+    int indexToIncrement = combination.size() - 1;
+    int ifEqualThenKeepGoing = n;
+
+    while (combination.at(indexToIncrement) == ifEqualThenKeepGoing) {
+        indexToIncrement--;
+        ifEqualThenKeepGoing--;
+        if (indexToIncrement == -1) {
+            throw runtime_error("last combination reached");
+        }
+    }
+
+    combination.at(indexToIncrement)++;
+    for (int i = indexToIncrement + 1; i < combination.size(); i++) {
+        combination.at(i) = combination.at(i - 1) + 1;
+    }
+    
+    return setUtil::vectorToSet(combination);
+
+}
+
+// generates all possible combinations of size k from the numbers 1 to n
+// example: generateCombinations(4, 3) = {{1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4}}
+vector<set<int>> statUtil::generateCombinations(int n, int k) {
+
+    set<int> firstCombination = setUtil::vectorToSet(absFunc::buildList<int>(k, [] (int i) {
+        return i + 1;
+    }));
+
+    set<int> lastCombination = setUtil::vectorToSet(absFunc::buildList_f<int>(k, [n, k] (int i) {
+        return i + n - k + 1;
+    }));
+
+    vector<set<int>> result = {firstCombination};
+    set<int> currCombination = firstCombination;
+
+    while (currCombination != lastCombination) {
+        currCombination = nextCombination(n, currCombination);
+        result.push_back(currCombination);
+    }
+
+    return result;
+
+}
+
+// generates all possible combinations of all sizes from 0 to n from the numbers 1 to n
+// example: generateCombinationsUpTo(4) = {
+//     {},
+//     {1}, {2}, {3}, {4},
+//     {1, 2}, {1, 3}, {1, 4}, {2, 3}, {2, 4}, {3, 4},
+//     {1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4},
+//     {1, 2, 3, 4}
+// }
+vector<set<int>> statUtil::generateCombinationsUpTo(int n) {
+    vector<set<int>> result;
+    for (int i = 0; i <= n; i++) {
+        result = vecUtil::concatenate<set<int>>({result, generateCombinations(n, i)});
+    }
+    return result;
+}

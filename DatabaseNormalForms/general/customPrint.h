@@ -18,10 +18,10 @@ using namespace std;
 
 namespace cprint {
 
-	// the purpose of this function is to facilitate the chaining of operator <<
-	ostream& operator << (ostream& out, const ostream& ignore);
+    // the purpose of this function is to facilitate the chaining of operator <<
+    ostream& operator << (ostream& out, const ostream& ignore);
 
-	// the purpose of this function is to display vectors of custom objects
+    // the purpose of this function is to display vectors of custom objects
     template <typename T>
     ostream& print(ostream& out, const vector<T>& v, ostream& (*printFunc) (ostream&, const T&)) {
         if (v.empty()) {
@@ -69,7 +69,7 @@ namespace cprint {
         return out;
     }
 
-	// the purpose of this function is to display maps of custom objects
+    // the purpose of this function is to display maps of custom objects
     template <typename K, typename V>
     ostream& print(ostream& out, const map<K, V>& m,
                    ostream& (*printKey) (ostream&, const K&), ostream& (*printValue) (ostream&, const V&)) {

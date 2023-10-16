@@ -16,7 +16,7 @@
  */
 
 #ifndef ANSI_CODES_H
-#define	ANSI_CODES_H
+#define ANSI_CODES_H
 
 #include <string>
 using namespace std;
@@ -56,42 +56,42 @@ const string ANSI_STRIKETHROUGH = "\033[9m";
 // the colours and styles. Note that __LINE__ is the current line number
 // of the file (which helps you figure out which colour/style you applied).
 /*
-	cout << "\nNORMAL COLOURS\n";
-	cout << ANSI_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << "\nNORMAL COLOURS\n";
+    cout << ANSI_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
 
-	cout << "\nBOLD STYLE\n";
-	cout << ANSI_BOLD << ANSI_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BOLD << ANSI_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << "\nBOLD STYLE\n";
+    cout << ANSI_BOLD << ANSI_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BOLD << ANSI_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
 
-	cout << "\nBACKGROUND COLOURS\n";
-	cout << ANSI_BACKGROUND_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_BACKGROUND_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << "\nBACKGROUND COLOURS\n";
+    cout << ANSI_BACKGROUND_BLACK << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_RED << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_GREEN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_YELLOW << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_BLUE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_MAGENTA << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_CYAN << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_BACKGROUND_WHITE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
 
-	cout << "\nSTYLES\n";
-	cout << ANSI_BOLD << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_ITALIC << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_UNDERLINE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_INVERSE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
-	cout << ANSI_STRIKETHROUGH << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << "\nSTYLES\n";
+    cout << ANSI_BOLD << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_ITALIC << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_UNDERLINE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_INVERSE << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
+    cout << ANSI_STRIKETHROUGH << "Testing @ line " << __LINE__ << ANSI_NORMAL << endl;
  */
 
-#endif	/* ANSI_CODES_H */
+#endif /* ANSI_CODES_H */

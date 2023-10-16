@@ -4,6 +4,7 @@
 #include "numberUtility.h"
 #include "vectorUtility.h"
 #include "abstractFunctions.h"
+#include "setUtility.h"
 
 #include <map>
 #include <numeric>
@@ -73,6 +74,24 @@ namespace statUtil {
     // generates permutations from 1 to n
     // example: generatePermutations(3) = {{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2}, {3, 2, 1}}
     vector<vector<int>> generatePermutations(int n);
+
+    // gives the next combination (see below)
+    // example: nextCombination(5, {1, 2, 4}) = {1, 2, 5}; nextCombination(5, {1, 2, 5}) = {1, 3, 4}
+    set<int> nextCombination(int n, const set<int>& currCombination);
+
+    // generates all possible combinations of size k from the numbers 1 to n
+    // example: generateCombinations(4, 3) = {{1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4}}
+    vector<set<int>> generateCombinations(int n, int k);
+
+    // generates all possible combinations of all sizes from 0 to n from the numbers 1 to n
+    // example: generateCombinationsUpTo(4) = {
+    //     {},
+    //     {1}, {2}, {3}, {4},
+    //     {1, 2}, {1, 3}, {1, 4}, {2, 3}, {2, 4}, {3, 4},
+    //     {1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4},
+    //     {1, 2, 3, 4}
+    // }
+    vector<set<int>> generateCombinationsUpTo(int n);
 
 }
 
