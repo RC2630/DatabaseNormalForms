@@ -25,7 +25,9 @@ namespace help {
         "/issuperkey = check if a set of attributes form a superkey for a relation\n"
         "/iskey = check if a set of attributes form a (minimal) key for a relation\n"
         "/findkeys = find all (minimal) keys of a relation\n"
-        "/findsuperkeys = find all superkeys of a relation";
+        "/findsuperkeys = find all superkeys of a relation\n\n"
+        
+        "/violbcnf = check if a (non-trivial and single-attribute-right-side) functional dependency violates BCNF";
 
     const string FILE_HELP =
 

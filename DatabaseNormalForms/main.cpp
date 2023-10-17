@@ -211,6 +211,19 @@ void findAllSuperkeys() {
     }
 }
 
+void violatesBCNF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "Enter the functional dependency to check: ";
+        FunctionalDependency fd = inputFD();
+        cout << ANSI_BLUE << "\nThe given functional dependency "
+             << (rel.violatesBCNF(fd) ? "violates" : "does NOT violate") << " BCNF.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -249,6 +262,8 @@ void run() {
             findAllKeys();
         } else if (parse::commandIs(command, "/findsuperkeys")) {
             findAllSuperkeys();
+        } else if (parse::commandIs(command, "/violbcnf")) {
+            violatesBCNF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

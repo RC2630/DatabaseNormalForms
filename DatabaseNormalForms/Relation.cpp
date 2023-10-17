@@ -181,6 +181,10 @@ set<set<Attribute>> Relation::findAllSuperkeys() const {
 
 }
 
+bool Relation::violatesBCNF(const FunctionalDependency& fd) const {
+    return !isSuperkey(fd.left);
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

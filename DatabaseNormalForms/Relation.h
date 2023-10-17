@@ -24,6 +24,8 @@ struct Relation {
     bool isKey(const set<Attribute>& atts) const;
     set<set<Attribute>> findAllSuperkeys() const;
 
+    bool violatesBCNF(const FunctionalDependency& fd) const;
+
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
 
