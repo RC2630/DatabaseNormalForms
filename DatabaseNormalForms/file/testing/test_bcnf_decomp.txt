@@ -1,0 +1,50 @@
+R1(A, B, C, D)
+B -> C
+D -> A
+
+R2(A, B, C, D, E)
+A, B -> C
+D -> E
+
+R3(A, B, C, D, E)
+A, B -> C
+C, D -> E
+C -> D
+
+R4(A, B, C, D, E)
+A, B -> C
+B, C -> D
+C, D -> E
+D, E -> A
+A, E -> B
+
+R5(A, B, C, D, E, F)
+A -> B
+D, E -> F
+B -> C
+
+Address(House #, Street, City, Province, Postal Code)
+Postal Code -> City, Province
+
+SuperRentInfo(I, N, E, S, ED, C, CN, B, T, P)
+I -> N, E
+CN -> I
+B -> C
+CN, B -> T
+CN, B, T -> S, ED
+P -> I, CN
+
+S(G, H, J, K)
+G -> H
+J, K -> G
+H -> K
+
+R6(A, B, C, D)
+A -> B
+C -> D
+A, D -> C
+B, C -> A
+
+Store(Unit, Company, Product)
+Unit -> Company
+Company, Product -> Unit

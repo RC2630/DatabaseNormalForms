@@ -3,6 +3,7 @@
 #include "../general/setUtility.h"
 #include "../general/abstractFunctions.h"
 #include "../general/customPrint.h"
+#include "../general/ansi_codes.h"
 
 using setUtil::operator<<;
 using cprint::operator<<;
@@ -138,4 +139,16 @@ void test::testFindAllKeysAndSuperkeys() {
         cout << "\n";
     }
 
+}
+
+void test::testBCNFdecomp() {
+    set<Relation> rels = rel::readFromFile("file/testing/test_bcnf_decomp.txt");
+    for (const Relation& rel : rels) {
+        cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
+             << ANSI_RED << "\n\nDecomposition:\n" << ANSI_NORMAL;
+        for (const Relation& decompRel : rel.decompBCNF()) {
+            cout << "\n" << decompRel << "\n";
+        }
+        cout << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
+    }
 }

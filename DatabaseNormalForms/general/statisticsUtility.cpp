@@ -150,3 +150,16 @@ vector<set<int>> statUtil::generateCombinationsUpTo(int n) {
     }
     return result;
 }
+
+// starting from "start" (>= 0) and ending at "end" (>= start), generate labels of all numbers with the same number of characters
+// example: generateNumberLabels(0, 100) = {"000", "001", ..., "098", "099", "100"}
+// example: generateNumberLabels(998, 1002) = {"0998", "0999", "1000", "1001", "1002"}
+vector<string> statUtil::generateNumberLabels(int start, int end) {
+    int numDigits = to_string(end).size();
+    vector<string> result;
+    for (int i = start; i <= end; i++) {
+        string s = to_string(i);
+        result.push_back(string(numDigits - s.size(), '0') + s);
+    }
+    return result;
+}

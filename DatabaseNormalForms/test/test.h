@@ -15,6 +15,8 @@ namespace test {
     void testKeysAndSuperkeys();
     void testFindAllKeysAndSuperkeys();
 
+    void testBCNFdecomp();
+
 }
 
 #endif

@@ -25,10 +25,15 @@ struct Relation {
     set<set<Attribute>> findAllSuperkeys() const;
 
     bool violatesBCNF(const FunctionalDependency& fd) const;
+    set<Relation> decompBCNF() const;
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
 
+private:
+
+    set<Relation> decompBCNFhelper() const;
+    
 };
 
 ostream& operator << (ostream& out, const Relation& rel);

@@ -185,6 +185,40 @@ bool Relation::violatesBCNF(const FunctionalDependency& fd) const {
     return !isSuperkey(fd.left);
 }
 
+set<Relation> Relation::decompBCNF() const {
+
+    vector<Relation> decomp = setUtil::setToVector(decompBCNFhelper());
+    vector<string> labels = statUtil::generateNumberLabels(1, decomp.size());
+
+    if (decomp.size() == 1) {
+        decomp.front().name = this->name;
+        return setUtil::vectorToSet(decomp);
+    }
+
+    int labelIndex = 0;
+    for (Relation& rel : decomp) {
+        rel.name = this->name + "." + labels.at(labelIndex++);
+    }
+
+    return setUtil::vectorToSet(decomp);
+
+}
+
+set<Relation> Relation::decompBCNFhelper() const {
+
+    for (const FunctionalDependency& fd : this->fds) {
+        if (violatesBCNF(fd)) {
+            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds);
+            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds);
+            return setUtil::setUnion(newRelFromFd.decompBCNFhelper(), newRelFromRest.decompBCNFhelper());
+        }
+    }
+
+    // at this point, no FD's violate BCNF
+    return {*this};
+
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

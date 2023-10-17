@@ -23,3 +23,24 @@ Decomp1(A, B, C)
 
 Decomp2(C, D, E)
 @PARENT Simple
+
+R(A, B, C, D)
+A -> B
+C -> D
+A, D -> C
+B, C -> A
+
+AB(A, B)
+@PARENT R
+
+AC(A, C)
+@PARENT R
+
+BD(B, D)
+@PARENT R
+
+CD(C, D)
+@PARENT R
+
+BCD(B, C, D)
+@PARENT R

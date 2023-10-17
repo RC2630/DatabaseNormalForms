@@ -224,6 +224,19 @@ void violatesBCNF() {
     }
 }
 
+void decomposeBCNF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "\nHere are the relations in the BCNF decomposition of your relation:\n";
+        for (const Relation& r : rel.decompBCNF()) {
+            cout << "\n" << r << "\n";
+        }
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
@@ -264,6 +277,8 @@ void run() {
             findAllSuperkeys();
         } else if (parse::commandIs(command, "/violbcnf")) {
             violatesBCNF();
+        } else if (parse::commandIs(command, "/bcnf")) {
+            decomposeBCNF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }
