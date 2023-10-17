@@ -118,6 +118,10 @@ void Relation::inheritFDsFrom(const Relation& parent, bool removeIrrelevant) {
 
 bool Relation::isDecompLossless(const set<Relation>& decomps) const {
 
+    if (decomps.size() != 2) {
+        throw invalid_argument("input size must be 2");
+    }
+
     set<Attribute> isecAtts = setUtil::intersect(absFunc::map_f<Relation, set<Attribute>>(setUtil::setToVector(decomps), [] (const Relation& rel) {
         return rel.atts;
     }));

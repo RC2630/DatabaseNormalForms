@@ -149,12 +149,15 @@ void isLossless() {
     try {
         cout << "\nEnter the name of the full relation: ";
         Relation full = inputRelation();
-        cout << "Enter the names of the relations that comprise the decomposition of the full relation: ";
+        cout << "Enter the names of the 2 relations that comprise the decomposition of the full relation: ";
         set<Relation> decomp = inputRelationSet();
-        cout << ANSI_BLUE << "\nThe given decomposition is " << (full.isDecompLossless(decomp) ? "" : "NOT ")
+        bool isLosslessResult = full.isDecompLossless(decomp);
+        cout << ANSI_BLUE << "\nThe given decomposition is " << (isLosslessResult ? "" : "NOT ")
              << "a lossless decomposition of the full relation.\n" << ANSI_NORMAL;
     } catch (const runtime_error& e) {
         cout << noRelationErrorMessage(e.what());
+    } catch (const invalid_argument& e) {
+        cout << ANSI_RED << "\nYou specified the wrong number of relations in the given decomposition (must be 2).\n" << ANSI_NORMAL;
     }
 }
 
@@ -239,7 +242,8 @@ void decomposeBCNF() {
 
 void run() {
     
-    cout << "\nWelcome to the Database Normal Forms program! Please type " << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
+    cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
+         << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
     string command;
 
     while (true) {

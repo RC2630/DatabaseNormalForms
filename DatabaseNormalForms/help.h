@@ -21,7 +21,7 @@ namespace help {
         
         "/closure = take closure of a set of attributes with respect to a set of functional dependencies\n"
         "/findall = find all implicit FD's, transform them into new FD's with single-attribute right sides, and remove trivial FD's\n"
-        "/islossless = check if a decomposition (set of relations) for a relation is a lossless one or not\n"
+        "/islossless = check if a decomposition (must be only 2 relations) for a relation is a lossless one or not\n"
         "/issuperkey = check if a set of attributes form a superkey for a relation\n"
         "/iskey = check if a set of attributes form a (minimal) key for a relation\n"
         "/findkeys = find all (minimal) keys of a relation\n"

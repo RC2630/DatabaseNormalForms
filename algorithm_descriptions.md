@@ -35,8 +35,8 @@
 		- remove any trivial fd from fds (trivial means fd.right is contained inside fd.left)
 		- remove any irrelevant fd from fds (irrelevant means an attribute appears in the fd but not in the relation)
 
-- lossy or lossless
-	- input: R rel, set\<R> decomp
+- lossy or lossless (for decomposition of size 2)
+	- input: R rel, set\<R> decomp (of size 2)
 	- output: bool
 	- steps:
 		- take the intersection of the relations in decomp
