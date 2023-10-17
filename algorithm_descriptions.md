@@ -120,7 +120,7 @@
 			- check if fd.right is part of any key of rel
 			- if fd.left is not a superkey AND fd.right is not part of any key, then it violates 3NF
 
-- 3NF decomp (decomp)
+- 3NF decomp (lossless join)
 	- input: R rel
 	- output: set\<R>
 	- steps:
