@@ -124,10 +124,10 @@
 	- input: R rel, FD fd
 	- output: bool
 	- steps:
-			- find all keys of rel
-			- check if fd.left is a superkey of rel
-			- check if fd.right is part of any key of rel
-			- if fd.left is not a superkey AND fd.right is not part of any key, then it violates 3NF
+		- find all keys of rel
+		- check if fd.left is a superkey of rel
+		- check if fd.right is part of any key of rel
+		- if fd.left is not a superkey AND fd.right is not part of any key, then it violates 3NF
 
 - is relation in 3NF
 	- input: R rel
@@ -173,7 +173,7 @@
 	- input: R rel
 	- output: bool
 	- steps:
-		- note that this algorithm only tells us if they are DEFINITELY the same or POSSIBLY NOT the same (never DEFINITELY NOT the same)
+		- note that this algorithm only says if they are DEFINITELY the same or POSSIBLY NOT the same (never DEFINITELY NOT the same)
 		- (1) check if rel has multiple valid candidate keys
 		- (2) check if rel has at least 1 key with multiple attributes in it
 		- (3) check if rel has at least 2 keys with overlapping attributes
