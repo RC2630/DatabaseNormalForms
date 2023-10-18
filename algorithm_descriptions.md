@@ -141,22 +141,41 @@
 	- input: R rel
 	- output: set\<R>
 	- steps:
-		- TODO (wait for next lecture)
+		- if rel is already in 3NF then do nothing
+		- pick any fd in rel.fds that violates 3NF and split the relation into two using that fd (same type of split as BCNF)
+		- then decompose all the way down to BCNF (for both relations obtained from above split)
+		- find the minimal cover for rel.fds
+		- for each fd in the minimal cover, if there is no relation in the decomposition that contains all of the attributes in fd:
+		- add a new relation with the attributes in fd
+		- finally, remove redundant relations
 
 - 3NF decomp (synthesis)
 	- input: R rel
 	- output: set\<R>
 	- steps:
-		- TODO (wait for next lecture)
+		- if rel is already in 3NF then do nothing
+		- find the minimal cover of rel.fds
+		- for each fd in the minimal cover, add a new relation with the attributes in fd
+		- find all valid candidate keys for rel
+		- check if there is a relation in the decomposition with all the attributes of a key (i.e. its attributes are a superkey of rel)
+		- if there is not, then add a new relation to the decomposition with the attributes of any of the valid keys (pick 1 key only)
+		- finally, remove redundant relations
 
 - optimize decomposition: remove redundant relations
 	- input: set\<R> decomp
 	- output: set\<R>
 	- steps:
-		- TODO (wait for next lecture)
+		- check if any relations in decomp are fully contained within any other relation
+		- in other words, check if any relation is a strict subset of another relation
+		- if there are, then remove all such subset relations from decomp
 
-- is 3NF decomp in BCNF
-	- input: R rel, set\<R> decomp
+- would 3NF decomp be the same as BCNF
+	- input: R rel
 	- output: bool
 	- steps:
-		- TODO (wait for next lecture)
+		- note that this algorithm only tells us if they are DEFINITELY the same or POSSIBLY NOT the same (never DEFINITELY NOT the same)
+		- (1) check if rel has multiple valid candidate keys
+		- (2) check if rel has at least 1 key with multiple attributes in it
+		- (3) check if rel has at least 2 keys with overlapping attributes
+		- a simplification is to only to check (3) because in order for (3) to be true, (1) and (2) both need to be true as well
+		- if all of (1), (2), and (3) are true, then the 3NF and BCNF are POSSIBLY NOT the same; otherwise they are DEFINITELY the same
