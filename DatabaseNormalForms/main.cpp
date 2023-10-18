@@ -227,6 +227,16 @@ void violatesBCNF() {
     }
 }
 
+void checkBCNF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << ANSI_BLUE << "\nYour relation is currently " << (rel.isInBCNF() ? "" : "NOT ") << "in BCNF.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void decomposeBCNF() {
     try {
         cout << "\nEnter the name of the relation: ";
@@ -281,6 +291,8 @@ void run() {
             findAllSuperkeys();
         } else if (parse::commandIs(command, "/violbcnf")) {
             violatesBCNF();
+        } else if (parse::commandIs(command, "/checkbcnf")) {
+            checkBCNF();
         } else if (parse::commandIs(command, "/bcnf")) {
             decomposeBCNF();
         } else {

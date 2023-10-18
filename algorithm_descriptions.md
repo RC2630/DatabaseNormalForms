@@ -84,6 +84,14 @@
 		- check if fd.left is a superkey of rel
 		- if it is not, then it violates BCNF
 
+- is relation in BCNF
+	- input: R rel
+	- output: bool
+	- steps:
+		- for each fd in rel.fds, check to see if it violates BCNF
+		- if yes, then the relation is not in BCNF
+		- if all fds do not violate BCNF then rel is in BCNF
+
 - BCNF decomp
 	- input: R rel
 	- output: set\<R>
@@ -92,6 +100,7 @@
 		- if it does, then use the fd to split rel into 2 new relations:
 		- one with the attributes in fd, and one with the attributes in fd.left + the attributes not in fd
 		- then, repeat the process for each of the two new relations, until all relations do not violate BCNF
+		- remove redundant relations (relations whose attributes are all found in another relation) from the decomposition
 
 - find minimal cover
 	- input: set\<FD> fds
@@ -119,6 +128,14 @@
 			- check if fd.left is a superkey of rel
 			- check if fd.right is part of any key of rel
 			- if fd.left is not a superkey AND fd.right is not part of any key, then it violates 3NF
+
+- is relation in 3NF
+	- input: R rel
+	- output: bool
+	- steps:
+		- for each fd in rel.fds, check to see if it violates 3NF
+		- if yes, then the relation is not in 3NF
+		- if all fds do not violate 3NF then rel is in 3NF
 
 - 3NF decomp (lossless join)
 	- input: R rel

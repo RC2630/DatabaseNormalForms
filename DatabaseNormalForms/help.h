@@ -28,6 +28,7 @@ namespace help {
         "/findsuperkeys = find all superkeys of a relation\n\n"
         
         "/violbcnf = check if a (non-trivial and single-attribute-right-side) functional dependency violates BCNF\n"
+        "/checkbcnf = check if a relation is in BCNF\n"
         "/bcnf = find the BCNF decomposition of a relation";
 
     const string FILE_HELP =

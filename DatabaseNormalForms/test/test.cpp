@@ -145,7 +145,8 @@ void test::testBCNFdecomp() {
     set<Relation> rels = rel::readFromFile("file/testing/test_bcnf_decomp.txt");
     for (const Relation& rel : rels) {
         cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
-             << ANSI_RED << "\n\nDecomposition:\n" << ANSI_NORMAL;
+             << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BNCF)"
+             << ANSI_RED << ":\n" << ANSI_NORMAL;
         for (const Relation& decompRel : rel.decompBCNF()) {
             cout << "\n" << decompRel << "\n";
         }

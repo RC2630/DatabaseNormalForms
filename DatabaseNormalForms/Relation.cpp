@@ -189,6 +189,15 @@ bool Relation::violatesBCNF(const FunctionalDependency& fd) const {
     return !isSuperkey(fd.left);
 }
 
+bool Relation::isInBCNF() const {
+    for (const FunctionalDependency& fd : this->fds) {
+        if (violatesBCNF(fd)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 set<Relation> Relation::decompBCNF() const {
 
     vector<Relation> decomp = setUtil::setToVector(decompBCNFhelper());
@@ -337,4 +346,9 @@ set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
     
     return relsWithProcessedParents;
 
+}
+
+set<Relation> rel::removeRedundantRelations(const set<Relation>& rels) {
+    // TODO
+    return rels;
 }

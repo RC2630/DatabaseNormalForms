@@ -25,6 +25,7 @@ struct Relation {
     set<set<Attribute>> findAllSuperkeys() const;
 
     bool violatesBCNF(const FunctionalDependency& fd) const;
+    bool isInBCNF() const;
     set<Relation> decompBCNF() const;
 
     bool operator < (const Relation& other) const;
@@ -43,6 +44,7 @@ namespace rel {
 
     Relation getByName(const set<Relation>& rels, string name);
     set<Relation> readFromFile(const string& filename, bool preprocess = true);
+    set<Relation> removeRedundantRelations(const set<Relation>& rels);
 
 }
 
