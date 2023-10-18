@@ -25,7 +25,8 @@ namespace help {
         "/issuperkey = check if a set of attributes form a superkey for a relation\n"
         "/iskey = check if a set of attributes form a (minimal) key for a relation\n"
         "/findkeys = find all (minimal) keys of a relation\n"
-        "/findsuperkeys = find all superkeys of a relation\n\n"
+        "/findsuperkeys = find all superkeys of a relation\n"
+        "/remredundant = remove all redundant relations from a given set of relations\n\n"
         
         "/violbcnf = check if a (non-trivial and single-attribute-right-side) functional dependency violates BCNF\n"
         "/checkbcnf = check if a relation is in BCNF\n"

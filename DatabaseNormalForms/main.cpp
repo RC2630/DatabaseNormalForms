@@ -214,6 +214,16 @@ void findAllSuperkeys() {
     }
 }
 
+void removeRedundant() {
+    try {
+        cout << "\nEnter the set of relations to check: ";
+        set<Relation> relsToCheck = inputRelationSet();
+        cout << "\nHere are the non-redundant relations that should be kept:\n" << rel::removeRedundantRelations(relsToCheck);
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void violatesBCNF() {
     try {
         cout << "\nEnter the name of the relation: ";
@@ -289,6 +299,8 @@ void run() {
             findAllKeys();
         } else if (parse::commandIs(command, "/findsuperkeys")) {
             findAllSuperkeys();
+        } else if (parse::commandIs(command, "/remredundant")) {
+            removeRedundant();
         } else if (parse::commandIs(command, "/violbcnf")) {
             violatesBCNF();
         } else if (parse::commandIs(command, "/checkbcnf")) {

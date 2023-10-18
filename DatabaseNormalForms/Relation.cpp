@@ -200,7 +200,7 @@ bool Relation::isInBCNF() const {
 
 set<Relation> Relation::decompBCNF() const {
 
-    vector<Relation> decomp = setUtil::setToVector(decompBCNFhelper());
+    vector<Relation> decomp = setUtil::setToVector(rel::removeRedundantRelations(decompBCNFhelper()));
     vector<string> labels = statUtil::generateNumberLabels(1, decomp.size());
 
     if (decomp.size() == 1) {
@@ -349,6 +349,26 @@ set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
 }
 
 set<Relation> rel::removeRedundantRelations(const set<Relation>& rels) {
-    // TODO
-    return rels;
+
+    auto isRedundant = [&rels] (const Relation& rel) -> bool {
+        for (const Relation& r : rels) {
+            if (setUtil::isSuperset(r.atts, rel.atts, true)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    vector<Relation> relations = setUtil::setToVector(rels);
+    vector<int> indexesToRemove;
+
+    for (int i = 0; i < relations.size(); i++) {
+        if (isRedundant(relations.at(i))) {
+            indexesToRemove.push_back(i);
+        }
+    }
+
+    vecUtil::removeByIndexes(relations, indexesToRemove);
+    return setUtil::vectorToSet(relations);
+
 }
