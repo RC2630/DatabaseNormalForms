@@ -153,3 +153,15 @@ void test::testBCNFdecomp() {
         cout << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
     }
 }
+
+void test::testProject() {
+    set<Relation> rels = rel::readFromFile("file/project/project_relations.txt");
+    for (const Relation& rel : rels) {
+        if (rel.name != "Everything") {
+            cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
+                 << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BNCF)"
+                 << ANSI_RED << ":\n" << ANSI_NORMAL << rel.decompBCNF()
+                 << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
+        }
+    }
+}

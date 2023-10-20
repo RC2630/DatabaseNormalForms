@@ -17,6 +17,8 @@ namespace test {
 
     void testBCNFdecomp();
 
+    void testProject();
+
 }
 
 #endif
