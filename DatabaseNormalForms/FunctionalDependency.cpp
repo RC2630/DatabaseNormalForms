@@ -4,6 +4,8 @@
 #include "general/stringUtility.h"
 #include "general/setUtility.h"
 #include "general/ansi_codes.h"
+#include "general/mapUtility.h"
+#include "general/abstractFunctions.h"
 
 FunctionalDependency::FunctionalDependency(const set<Attribute>& left, const set<Attribute>& right)
 : left(left), right(right)
@@ -137,5 +139,99 @@ set<Attribute> fd::closure(const set<Attribute>& atts, const set<FunctionalDepen
     }
 
     return closureAtts;
+
+}
+
+set<FunctionalDependency> fd::minimalCover(const set<FunctionalDependency>& fds) {
+    
+    // step 1: take each fd and split its right side attributes into multiple functional dependencies
+
+    set<FunctionalDependency> step1;
+    for (const FunctionalDependency& fd : fds) {
+        for (const Attribute& att : fd.right) {
+            step1.insert(FunctionalDependency(fd.left, {att}));
+        }
+    }
+
+    // step 2: attempt to simplify the left side of each FD by removing redundant attributes from it
+
+    map<int, FunctionalDependency> step2 = mapUtil::makeMap<int, FunctionalDependency>(
+        absFunc::buildList<int>(step1.size(), [] (int n) {
+            return n;
+        }),
+        setUtil::setToVector(step1)
+    );
+
+    auto canAttributeBeRemoved = [&step2] (const FunctionalDependency& fd, const Attribute& att) -> bool {
+        set<Attribute> closureAtts = fd::closure(
+            setUtil::difference(fd.left, {att}),
+            setUtil::vectorToSet(mapUtil::getValues(step2))
+        );
+        return closureAtts.count(att);
+    };
+
+    function<void (FunctionalDependency&)> simplifyLeftSide;
+    simplifyLeftSide = [canAttributeBeRemoved, simplifyLeftSide] (FunctionalDependency& fd) -> void {
+
+        // base case
+        if (fd.left.size() == 1) {
+            return;
+        }
+
+        // recursive case
+        for (const Attribute& att : fd.left) {
+            if (canAttributeBeRemoved(fd, att)) {
+                fd = FunctionalDependency(setUtil::difference(fd.left, {att}), fd.right);
+                simplifyLeftSide(fd);
+                return;
+            }
+        }
+
+    };
+
+    for (int i : mapUtil::getKeys(step2)) {
+        simplifyLeftSide(step2.at(i));
+    }
+
+    // step 3: attempt to remove redundant functional dependencies
+
+    map<int, pair<FunctionalDependency, bool>> step3;
+    for (const auto& entry : step2) {
+        step3.insert({entry.first, {entry.second, false}}); // the bool is whether or not this FD has been removed
+    }
+
+    auto onlyNonRemovedFDs = [&step3] () -> set<FunctionalDependency> {
+
+        vector<pair<FunctionalDependency, bool>> filtered = absFunc::filter_f<pair<FunctionalDependency, bool>>(
+            mapUtil::getValues(step3), [] (const pair<FunctionalDependency, bool>& fd) {
+                return !fd.second; // filter for only the not removed FD's
+            }
+        );
+
+        return setUtil::vectorToSet(absFunc::map_f<pair<FunctionalDependency, bool>, FunctionalDependency>(
+            filtered, [] (const pair<FunctionalDependency, bool>& fdPair) {
+                return fdPair.first;
+            }
+        ));
+
+    };
+
+    auto attemptRedundantFDremoval = [&step3, onlyNonRemovedFDs] (int index) -> void {
+
+        FunctionalDependency& fd = step3.at(index).first;
+        step3.at(index).second = true; // pretend that we have removed the FD
+
+        set<Attribute> closureAtts = fd::closure(fd.left, onlyNonRemovedFDs());
+        if (!setUtil::isSuperset(closureAtts, fd.right)) {
+            step3.at(index).second = false; // not actually redundant, put it back
+        }
+
+    };
+
+    for (int i : mapUtil::getKeys(step3)) {
+        attemptRedundantFDremoval(i);
+    }
+
+    return onlyNonRemovedFDs();
 
 }

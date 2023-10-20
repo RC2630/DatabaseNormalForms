@@ -28,7 +28,8 @@ namespace fd {
     set<FunctionalDependency> findAllFunctionalDependencies(const set<FunctionalDependency>& fds);
     set<FunctionalDependency> removeIrrelevantFDs(const set<FunctionalDependency>& fds, const set<Attribute>& atts);
     set<Attribute> closure(const set<Attribute>& atts, const set<FunctionalDependency>& fds);
-    
+    set<FunctionalDependency> minimalCover(const set<FunctionalDependency>& fds);
+
 }
 
 #endif
