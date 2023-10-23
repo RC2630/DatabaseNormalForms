@@ -16,6 +16,7 @@ namespace test {
     void testFindAllKeysAndSuperkeys();
 
     void testBCNFdecomp();
+    void testMinimalCover();
 
     void testProject();
 

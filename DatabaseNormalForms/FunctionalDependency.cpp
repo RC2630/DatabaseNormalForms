@@ -171,7 +171,7 @@ set<FunctionalDependency> fd::minimalCover(const set<FunctionalDependency>& fds)
     };
 
     function<void (FunctionalDependency&)> simplifyLeftSide;
-    simplifyLeftSide = [canAttributeBeRemoved, simplifyLeftSide] (FunctionalDependency& fd) -> void {
+    simplifyLeftSide = [canAttributeBeRemoved, &simplifyLeftSide] (FunctionalDependency& fd) -> void {
 
         // base case
         if (fd.left.size() == 1) {

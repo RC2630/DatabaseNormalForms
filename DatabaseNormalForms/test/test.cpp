@@ -154,6 +154,15 @@ void test::testBCNFdecomp() {
     }
 }
 
+void test::testMinimalCover() {
+    set<Relation> rels = rel::readFromFile("file/testing/test_minimal_cover.txt");
+    for (const Relation& rel : rels) {
+        cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
+             << ANSI_RED << "\n\nMinimal Cover:\n" << ANSI_NORMAL << fd::minimalCover(rel.fds)
+             << "\n" << ANSI_YELLOW << string(100, '-') << "\n" << ANSI_NORMAL;
+    }
+}
+
 void test::testProject() {
     set<Relation> rels = rel::readFromFile("file/project/project_relations.txt");
     for (const Relation& rel : rels) {

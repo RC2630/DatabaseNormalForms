@@ -260,6 +260,13 @@ void decomposeBCNF() {
     }
 }
 
+void minimalCover() {
+    cout << "\nEnter a set of functional dependencies:\n";
+    set<FunctionalDependency> fds = inputFDset();
+    cout << "\nHere is the minimal cover for your set of functional dependencies:"
+         << ANSI_BLUE << fd::minimalCover(fds) << ANSI_NORMAL;
+}
+
 void run() {
     
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
@@ -307,6 +314,8 @@ void run() {
             checkBCNF();
         } else if (parse::commandIs(command, "/bcnf")) {
             decomposeBCNF();
+        } else if (parse::commandIs(command, "/mincov")) {
+            minimalCover();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }
@@ -315,6 +324,14 @@ void run() {
 
 }
 
+void tryRun() {
+    try {
+        run();
+    } catch (...) {
+        cout << ANSI_RED << "\nOops, an unexpected error occurred. Sorry, but we cannot recover the program from here.\n" << ANSI_NORMAL;
+    }
+}
+
 int main() {
-    run();
+    tryRun();
 }

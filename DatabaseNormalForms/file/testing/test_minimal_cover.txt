@@ -1,0 +1,39 @@
+T3(I, N, E, S, ED, C, CN, B, T, P)
+I -> N, E
+CN -> I
+B -> C
+CN, B -> T
+CN, B, T -> S, ED
+P -> I, CN
+
+I4(L, M, N, O, P)
+L, M -> O, P, N
+P, M -> N
+O -> P
+L, P -> N
+M, N, O, P -> L
+
+I5(A, B, C, D, E)
+B, D -> A
+A, B -> C
+D -> A
+B -> C
+C -> E
+
+S88(A, B, C, D, E, F, G, H)
+A -> B
+A, B, C, D -> E
+E, F -> G, H
+A, C, D, F -> E, G
+
+S92(Z, S, J, D, P, Q, V)
+Z -> S, J, D, P, Q, V
+J, P -> Z
+S, D -> P
+J -> S
+
+S100(A, B, C, D, E)
+A, B, C, D -> E
+E -> D
+A -> B
+A, C -> D
