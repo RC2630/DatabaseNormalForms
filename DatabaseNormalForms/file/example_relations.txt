@@ -1,46 +1,17 @@
-Rel(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer)
-Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank
+R(A, B, C, D, E, F)
+A, B -> C
+B, D -> E
+C -> B
+E -> D
 
-Bell(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer, Moose)
-Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank
+S(G, H, J, K)
+G -> H
+J, K -> G
+H -> K
 
-Dill(Cat, Dog, Family Member, Goblin, Person, Tank, Tank Destroyer)
-Dog, Person, Tank, Tank Destroyer -> Cat, Family Member, Goblin, Person
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Garbage
-Dog, Person, Tank Destroyer -> Cat, Family Member, Goblin, Person, Tank
-
-Simple(A, B, C, D, E)
-A, B -> C, D
-A, E -> B
-C, E -> D
-
-Decomp1(A, B, C)
-@PARENT Simple
-
-Decomp2(C, D, E)
-@PARENT Simple
-
-R(A, B, C, D)
-A -> B
-C -> D
-A, D -> C
-B, C -> A
-
-AB(A, B)
-@PARENT R
-
-AC(A, C)
-@PARENT R
-
-BD(B, D)
-@PARENT R
-
-CD(C, D)
-@PARENT R
-
-BCD(B, C, D)
-@PARENT R
+T(L, M, N, O, P)
+L, M -> O, P, N
+P, M -> N
+O -> P
+L, P -> N
+M, N, O, P -> L
