@@ -240,6 +240,15 @@ bool Relation::violates3NF(const FunctionalDependency& fd) const {
     return !leftIsSuperkey && !rightIsPartOfKey;
 }
 
+bool Relation::isIn3NF() const {
+    for (const FunctionalDependency& fd : this->fds) {
+        if (violates3NF(fd)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

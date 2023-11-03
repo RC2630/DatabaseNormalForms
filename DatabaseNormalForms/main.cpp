@@ -280,6 +280,16 @@ void violates3NF() {
     }
 }
 
+void check3NF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << ANSI_BLUE << "\nYour relation is currently " << (rel.isIn3NF() ? "" : "NOT ") << "in 3NF.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
@@ -331,6 +341,8 @@ void run() {
             minimalCover();
         } else if (parse::commandIs(command, "/viol3nf")) {
             violates3NF();
+        } else if (parse::commandIs(command, "/check3nf")) {
+            check3NF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

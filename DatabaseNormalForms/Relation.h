@@ -28,6 +28,7 @@ struct Relation {
     bool isInBCNF() const;
     set<Relation> decompBCNF() const;
     bool violates3NF(const FunctionalDependency& fd) const;
+    bool isIn3NF() const;
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;

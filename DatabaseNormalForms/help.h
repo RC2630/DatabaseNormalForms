@@ -32,7 +32,8 @@ namespace help {
         "/checkbcnf = check if a relation is in BCNF\n"
         "/bcnf = find the BCNF decomposition of a relation\n"
         "/mincov = find the minimal cover of a set of functional dependencies\n"
-        "/viol3nf = check if a (non-trivial and single-attribute-right-side) functional dependency violates 3NF";
+        "/viol3nf = check if a (non-trivial and single-attribute-right-side) functional dependency violates 3NF\n"
+        "/check3nf = check if a relation is in 3NF";
 
     const string FILE_HELP =
 
