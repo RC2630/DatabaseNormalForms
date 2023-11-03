@@ -17,6 +17,7 @@ namespace test {
 
     void testBCNFdecomp();
     void testMinimalCover();
+    void test3NFdecompLJ();
 
     void testProject();
 

@@ -1,0 +1,42 @@
+S107(A, B, C, D, E)
+A, B -> C
+C -> D
+
+S108(C, S, J, D, P, Q, V)
+S, D -> P
+J, P -> C
+J -> S
+
+S114(A, B, C)
+A -> B
+C -> B
+
+S117(A, B, C, D, E, F, G)
+A, B -> C
+C -> D
+E, G -> F
+F -> E
+
+I5(A, B, C, 0.D, E)
+B, 0.D -> A
+A, B -> C
+0.D -> A
+B -> C
+C -> E
+
+T3(0.I, 1.N, 2.E, 3.S, 4.ED, 5.C, 6.CN, 7.B, 8.T, 9.P)
+0.I -> 1.N, 2.E
+6.CN -> 0.I
+7.B -> 5.C
+6.CN, 7.B -> 8.T
+6.CN, 7.B, 8.T -> 3.S, 4.ED
+9.P -> 0.I, 6.CN
+
+M14(I, N, D, C, S, P, M, G, E)
+I -> N, G
+I, N, D, C -> S
+D, C, S -> P
+P -> D
+E -> D
+G, P -> E
+C, S, E -> P

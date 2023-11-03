@@ -249,6 +249,46 @@ bool Relation::isIn3NF() const {
     return true;
 }
 
+set<Relation> Relation::decomp3NFlosslessJoin() const {
+
+    if (this->isIn3NF()) {
+        return {*this};
+    }
+
+    set<Relation> decomp;
+    set<FunctionalDependency> minCov = fd::minimalCover(this->fds);
+
+    // pick an FD that violates 3NF, and decompose all the way down to BCNF on that FD
+    for (const FunctionalDependency& fd : this->fds) {
+        if (this->violates3NF(fd)) {
+            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds);
+            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds);
+            decomp = setUtil::setUnion(newRelFromFd.decompBCNFhelper(), newRelFromRest.decompBCNFhelper());
+            break;
+        }
+    }
+
+    // every FD in the minimal cover that is not already in the decomposition needs to be added in
+    for (const FunctionalDependency& fd : minCov) {
+        if (!absFunc::ormap_f<Relation>(setUtil::setToVector(decomp), [&fd] (const Relation& rel) {
+            return setUtil::isSuperset(rel.atts, setUtil::setUnion(fd.left, fd.right));
+        })) {
+            decomp.insert(Relation(this->name, setUtil::setUnion(fd.left, fd.right), this->fds));
+        }
+    }
+
+    vector<Relation> decompVec = setUtil::setToVector(rel::removeRedundantRelations(decomp));
+    vector<string> labels = statUtil::generateNumberLabels(1, decompVec.size());
+
+    int currLabel = 0;
+    for (Relation& rel : decompVec) {
+        rel.name = this->name + "." + labels.at(currLabel++);
+    }
+
+    return setUtil::vectorToSet(decompVec);
+
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

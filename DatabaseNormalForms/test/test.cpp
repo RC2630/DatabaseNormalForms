@@ -145,7 +145,7 @@ void test::testBCNFdecomp() {
     set<Relation> rels = rel::readFromFile("file/testing/test_bcnf_decomp.txt");
     for (const Relation& rel : rels) {
         cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
-             << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BNCF)"
+             << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BCNF)"
              << ANSI_RED << ":\n" << ANSI_NORMAL;
         for (const Relation& decompRel : rel.decompBCNF()) {
             cout << "\n" << decompRel << "\n";
@@ -163,12 +163,25 @@ void test::testMinimalCover() {
     }
 }
 
+void test::test3NFdecompLJ() {
+    set<Relation> rels = rel::readFromFile("file/testing/test_3nf_decomp.txt");
+    for (const Relation& rel : rels) {
+        cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
+             << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isIn3NF() ? "" : "NOT ") << "in 3NF)"
+             << ANSI_RED << ":\n" << ANSI_NORMAL;
+        for (const Relation& decompRel : rel.decomp3NFlosslessJoin()) {
+            cout << "\n" << decompRel << "\n";
+        }
+        cout << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
+    }
+}
+
 void test::testProject() {
     set<Relation> rels = rel::readFromFile("file/project/project_relations.txt");
     for (const Relation& rel : rels) {
         if (rel.name != "Everything") {
             cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
-                 << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BNCF)"
+                 << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (rel.isInBCNF() ? "" : "NOT ") << "in BCNF)"
                  << ANSI_RED << ":\n" << ANSI_NORMAL << rel.decompBCNF()
                  << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
         }
