@@ -9,7 +9,7 @@
 
 using setUtil::operator<<;
 
-set<Relation> rels = rel::readFromFile("file/relations.txt");
+set<Relation> rels;
 
 string noRelationErrorMessage(string relname) {
     return ANSI_RED + "\nSorry, but there is no relation named \"" + relname + "\".\n" + ANSI_NORMAL;
@@ -308,6 +308,20 @@ void run() {
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
          << ANSI_YELLOW << "/help" << ANSI_NORMAL << " to get started.\n";
     string command;
+
+    cout << "\nWould you like to display all functional dependencies when a relation is printed?\n"
+         << "Enter \"yes\" or \"no\": " << ANSI_GREEN;
+    getline(cin >> ws, command);
+    bool printFDs = (command == "yes");
+
+    cout << ANSI_NORMAL << "\nWould you like to fully find all implicit functional dependencies "
+         << "(optimize completeness at the expense of performance)?\n"
+         << "Enter \"yes\" or \"no\": " << ANSI_GREEN;
+    getline(cin >> ws, command);
+    bool fullFindImp = (command == "yes");
+
+    cout << ANSI_NORMAL;
+    rels = rel::readFromFile("file/relations.txt", true, fullFindImp, printFDs);
 
     while (true) {
         
