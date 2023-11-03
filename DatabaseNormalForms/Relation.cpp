@@ -232,6 +232,14 @@ set<Relation> Relation::decompBCNFhelper() const {
 
 }
 
+bool Relation::violates3NF(const FunctionalDependency& fd) const {
+    bool leftIsSuperkey = this->isSuperkey(fd.left);
+    bool rightIsPartOfKey = absFunc::ormap_f<set<Attribute>>(setUtil::setToVector(this->findAllKeys()), [&fd] (const set<Attribute>& key) {
+        return setUtil::isSubset(fd.right, key);
+    });
+    return !leftIsSuperkey && !rightIsPartOfKey;
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

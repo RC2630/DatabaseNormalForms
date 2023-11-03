@@ -267,6 +267,19 @@ void minimalCover() {
          << ANSI_BLUE << fd::minimalCover(fds) << ANSI_NORMAL;
 }
 
+void violates3NF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "Enter the functional dependency to check: ";
+        FunctionalDependency fd = inputFD();
+        cout << ANSI_BLUE << "\nThe given functional dependency "
+            << (rel.violates3NF(fd) ? "violates" : "does NOT violate") << " 3NF.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
@@ -316,6 +329,8 @@ void run() {
             decomposeBCNF();
         } else if (parse::commandIs(command, "/mincov")) {
             minimalCover();
+        } else if (parse::commandIs(command, "/viol3nf")) {
+            violates3NF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }
