@@ -6,6 +6,7 @@
 #include "general/ansi_codes.h"
 #include "general/mapUtility.h"
 #include "general/abstractFunctions.h"
+#include "general/statisticsUtility.h"
 
 FunctionalDependency::FunctionalDependency(const set<Attribute>& left, const set<Attribute>& right)
 : left(left), right(right)
@@ -81,17 +82,51 @@ ostream& operator << (ostream& out, const set<FunctionalDependency>& fds) {
     return out;
 }
 
-set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<FunctionalDependency>& fds) {
+set<FunctionalDependency> fd::findAllFunctionalDependencies(const set<FunctionalDependency>& fds, bool full) {
 
     set<FunctionalDependency> resultStep1, resultStep2;
 
     // part 1: find implicit FD's (also removes trivial FD's)
-    for (const FunctionalDependency& fd : fds) {
-        set<Attribute> closureAtts = closure(fd.left, fds);
-        set<Attribute> newRight = setUtil::difference(closureAtts, fd.left);
-        if (newRight.size() > 0) {
-            resultStep1.insert(FunctionalDependency(fd.left, newRight));
+
+    // case A: optimized for performance, but may miss some implicit FD's
+    if (!full) {
+        for (const FunctionalDependency& fd : fds) {
+            set<Attribute> closureAtts = closure(fd.left, fds);
+            set<Attribute> newRight = setUtil::difference(closureAtts, fd.left);
+            if (newRight.size() > 0) {
+                resultStep1.insert(FunctionalDependency(fd.left, newRight));
+            }
         }
+    }
+
+    // case B: optimized for completeness, but may take a long time to run
+    if (full) {
+        
+        set<Attribute> allAttsInFDs;
+        for (const FunctionalDependency& fd : fds) {
+            allAttsInFDs.insert(fd.left.begin(), fd.left.end());
+            allAttsInFDs.insert(fd.right.begin(), fd.right.end());
+        }
+
+        vector<Attribute> allAttsInFDsVec = setUtil::setToVector(allAttsInFDs);
+        vector<set<int>> combs = statUtil::generateCombinationsUpTo(allAttsInFDs.size());
+
+        for (const set<int>& comb : combs) {
+
+            set<Attribute> currAtts = setUtil::vectorToSet(
+                absFunc::map_f<int, Attribute>(setUtil::setToVector(comb), [&allAttsInFDsVec] (const int& index) {
+                    return allAttsInFDsVec.at(index - 1);
+                })
+            );
+
+            set<Attribute> closureAtts = closure(currAtts, fds);
+            set<Attribute> newRight = setUtil::difference(closureAtts, currAtts);
+            if (newRight.size() > 0) {
+                resultStep1.insert(FunctionalDependency(currAtts, newRight));
+            }
+
+        }
+
     }
 
     // part 2: split multiple-right-side FD's into multiple FD's

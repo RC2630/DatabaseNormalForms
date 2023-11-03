@@ -11,17 +11,18 @@
 
 #include <queue>
 
-Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess)
-: name(name), atts(atts) {
+Relation::Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess, bool full, bool printFDs)
+: name(name), atts(atts), fullyFindImps(full), printFDs(printFDs) {
     if (preprocess) {
-        this->fds = fd::findAllFunctionalDependencies(fds);
+        this->fds = fd::findAllFunctionalDependencies(fds, full);
         this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
     } else {
         this->fds = fds;
     }
 }
 
-Relation::Relation(const string& schema, const set<string>& rawFds, bool preprocess) {
+Relation::Relation(const string& schema, const set<string>& rawFds, bool preprocess, bool full, bool printFDs)
+: fullyFindImps(full), printFDs(printFDs) {
     
     this->name = strUtil::removeAllAfterChar(schema, '(');
     string raw = strUtil::removeAllBeforeChar(schema, '(', true);
@@ -40,7 +41,7 @@ Relation::Relation(const string& schema, const set<string>& rawFds, bool preproc
     }
 
     if (preprocess) {
-        this->fds = fd::findAllFunctionalDependencies(this->fds);
+        this->fds = fd::findAllFunctionalDependencies(this->fds, full);
         this->fds = fd::removeIrrelevantFDs(this->fds, this->atts);
     }
 
@@ -221,8 +222,8 @@ set<Relation> Relation::decompBCNFhelper() const {
 
     for (const FunctionalDependency& fd : this->fds) {
         if (violatesBCNF(fd)) {
-            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds);
-            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds);
+            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds, true, this->fullyFindImps, this->printFDs);
+            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds, true, this->fullyFindImps, this->printFDs);
             return setUtil::setUnion(newRelFromFd.decompBCNFhelper(), newRelFromRest.decompBCNFhelper());
         }
     }
@@ -261,8 +262,8 @@ set<Relation> Relation::decomp3NFlosslessJoin() const {
     // pick an FD that violates 3NF, and decompose all the way down to BCNF on that FD
     for (const FunctionalDependency& fd : this->fds) {
         if (this->violates3NF(fd)) {
-            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds);
-            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds);
+            Relation newRelFromFd(this->name, setUtil::setUnion(fd.left, fd.right), this->fds, true, this->fullyFindImps, this->printFDs);
+            Relation newRelFromRest(this->name, setUtil::difference(this->atts, fd.right), this->fds, true, this->fullyFindImps, this->printFDs);
             decomp = setUtil::setUnion(newRelFromFd.decompBCNFhelper(), newRelFromRest.decompBCNFhelper());
             break;
         }
@@ -273,7 +274,7 @@ set<Relation> Relation::decomp3NFlosslessJoin() const {
         if (!absFunc::ormap_f<Relation>(setUtil::setToVector(decomp), [&fd] (const Relation& rel) {
             return setUtil::isSuperset(rel.atts, setUtil::setUnion(fd.left, fd.right));
         })) {
-            decomp.insert(Relation(this->name, setUtil::setUnion(fd.left, fd.right), this->fds));
+            decomp.insert(Relation(this->name, setUtil::setUnion(fd.left, fd.right), this->fds, true, this->fullyFindImps, this->printFDs));
         }
     }
 
@@ -341,7 +342,7 @@ Relation rel::getByName(const set<Relation>& rels, string name) {
     throw runtime_error("no relation named " + name);
 }
 
-set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
+set<Relation> rel::readFromFile(const string& filename, bool preprocess, bool full, bool printFDs) {
 
     vector<string> data;
     file::inputStrVecFrom(data, filename);
@@ -370,7 +371,7 @@ set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
         } else {
 
             if (!schema.empty()) {
-                rels.insert(Relation(schema, rawFds, preprocess));
+                rels.insert(Relation(schema, rawFds, preprocess, full, printFDs));
                 relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
             }
             
@@ -382,7 +383,7 @@ set<Relation> rel::readFromFile(const string& filename, bool preprocess) {
     }
 
     if (!schema.empty()) {
-        rels.insert(Relation(schema, rawFds, preprocess));
+        rels.insert(Relation(schema, rawFds, preprocess, full, printFDs));
         relationToParent.insert({strUtil::removeAllAfterChar(schema, '('), parentName});
     }
 

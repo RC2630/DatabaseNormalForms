@@ -176,6 +176,29 @@ void test::test3NFdecompLJ() {
     }
 }
 
+void test::test3NFrequireFull() {
+
+    set<Relation> relsReg = rel::readFromFile("file/testing/test_3nf_full.txt", true, false, false);
+    Relation s108Reg = rel::getByName(relsReg, "S108");
+    cout << ANSI_GREEN << "\n(NOT FULL)\n" << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << s108Reg
+         << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (s108Reg.isIn3NF() ? "" : "NOT ") << "in 3NF)"
+         << ANSI_RED << ":\n" << ANSI_NORMAL;
+    for (const Relation& decompRel : s108Reg.decomp3NFlosslessJoin()) {
+        cout << "\n" << decompRel << "\n";
+    }
+    cout << ANSI_YELLOW << "\n" << string(100, '-') << "\n" << ANSI_NORMAL;
+
+    set<Relation> relsFull = rel::readFromFile("file/testing/test_3nf_full.txt", true, true, false);
+    Relation s108Full = rel::getByName(relsFull, "S108");
+    cout << ANSI_GREEN << "\n(FULL)\n" << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << s108Full
+         << ANSI_RED << "\n\nDecomposition " << ANSI_YELLOW << "(" << (s108Full.isIn3NF() ? "" : "NOT ") << "in 3NF)"
+         << ANSI_RED << ":\n" << ANSI_NORMAL;
+    for (const Relation& decompRel : s108Full.decomp3NFlosslessJoin()) {
+        cout << "\n" << decompRel << "\n";
+    }
+
+}
+
 void test::testProject() {
     set<Relation> rels = rel::readFromFile("file/project/project_relations.txt");
     for (const Relation& rel : rels) {

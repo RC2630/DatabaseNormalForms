@@ -12,10 +12,18 @@ struct Relation {
     string name;
     set<Attribute> atts;
     set<FunctionalDependency> fds;
-    bool printFDs = true;
+    bool printFDs = true; // controls whether all (true) or none (false) of the FD's are displayed when a relation is printed
+    bool fullyFindImps = false; // controls whether the "find all implicit FD's" step prioritizes completeness (true) or performance (false)
 
-    Relation(const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds, bool preprocess = true);
-    Relation(const string& schema, const set<string>& rawFds, bool preprocess = true);
+    Relation(
+        const string& name, const set<Attribute>& atts, const set<FunctionalDependency>& fds,
+        bool preprocess = true, bool full = false, bool printFDs = true
+    );
+
+    Relation(
+        const string& schema, const set<string>& rawFds,
+        bool preprocess = true, bool full = false, bool printFDs = true
+    );
 
     set<set<Attribute>> findAllKeys() const;
     void inheritFDsFrom(const Relation& parent, bool removeIrrelevant = true);
@@ -46,7 +54,7 @@ ostream& operator << (ostream& out, const set<Relation>& rels);
 namespace rel {
 
     Relation getByName(const set<Relation>& rels, string name);
-    set<Relation> readFromFile(const string& filename, bool preprocess = true);
+    set<Relation> readFromFile(const string& filename, bool preprocess = true, bool full = false, bool printFDs = true);
     set<Relation> removeRedundantRelations(const set<Relation>& rels);
 
 }

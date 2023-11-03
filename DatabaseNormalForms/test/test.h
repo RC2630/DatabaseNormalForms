@@ -18,6 +18,7 @@ namespace test {
     void testBCNFdecomp();
     void testMinimalCover();
     void test3NFdecompLJ();
+    void test3NFrequireFull();
 
     void testProject();
 
