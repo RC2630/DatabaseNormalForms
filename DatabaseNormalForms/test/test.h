@@ -20,6 +20,7 @@ namespace test {
     void test3NFdecompLJ();
     void test3NFrequireFull();
     void test3NFdecompSyn();
+    void test3NFisPossiblyNotInBCNF();
 
     void testProject();
 

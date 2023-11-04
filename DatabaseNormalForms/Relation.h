@@ -39,6 +39,7 @@ struct Relation {
     bool isIn3NF() const;
     set<Relation> decomp3NFlosslessJoin() const;
     set<Relation> decomp3NFsynthesis() const;
+    bool possiblyNotInBCNFgiven3NF() const;
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;

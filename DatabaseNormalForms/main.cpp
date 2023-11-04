@@ -316,6 +316,21 @@ void synthesis3NF() {
     }
 }
 
+void assume3NFcheckBCNF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        bool possiblyNot = rel.possiblyNotInBCNFgiven3NF();
+        cout << ANSI_BLUE << "\nYour relation (which is in 3NF) is "
+             << (possiblyNot ? "POSSIBLY NOT" : "DEFINITELY")
+             << " in BCNF.\n" << ANSI_NORMAL;
+    } catch (const invalid_argument& e) {
+        cout << ANSI_RED << "\nYour relation is not in 3NF, so you cannot use this command.\n" << ANSI_NORMAL;
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
@@ -387,6 +402,8 @@ void run() {
             losslessJoin3NF();
         } else if (parse::commandIs(command, "/syn3nf")) {
             synthesis3NF();
+        } else if (parse::commandIs(command, "/3nfcheckbcnf")) {
+            assume3NFcheckBCNF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

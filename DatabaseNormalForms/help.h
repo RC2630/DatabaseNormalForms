@@ -35,7 +35,8 @@ namespace help {
         "/viol3nf = check if a (non-trivial and single-attribute-right-side) functional dependency violates 3NF\n"
         "/check3nf = check if a relation is in 3NF\n"
         "/lj3nf = find the 3NF decomposition of a relation using the lossless join method\n"
-        "/syn3nf = find the 3NF decomposition of a relation using the synthesis method";
+        "/syn3nf = find the 3NF decomposition of a relation using the synthesis method\n"
+        "/3nfcheckbcnf = assuming that the given relation is in 3NF, check whether it is definitely in or possibly not in BCNF";
 
     const string FILE_HELP =
 

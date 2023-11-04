@@ -1,0 +1,17 @@
+R1(A, B, C, D)
+A, C, D -> B
+A, C -> D
+D -> C
+A, C -> B
+
+R2(A, B, C, D)
+A, B, C -> D
+D -> A
+
+R3(A, B, C, D)
+A, B, C -> D
+
+R4(A, B, C, D, E, F)
+A, B, C -> D
+D -> A
+E -> F

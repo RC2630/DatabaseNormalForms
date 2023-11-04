@@ -212,6 +212,20 @@ void test::test3NFdecompSyn() {
     }
 }
 
+void test::test3NFisPossiblyNotInBCNF() {
+    set<Relation> rels = rel::readFromFile("file/testing/test_3nf_possibly_not_in_bcnf.txt");
+    for (const Relation& rel : rels) {
+        cout << ANSI_RED << "\nRelation:\n\n" << ANSI_NORMAL << rel
+             << ANSI_RED << "\n\nPossibly not in BCNF? " << boolalpha << ANSI_NORMAL;
+        try {
+            cout << rel.possiblyNotInBCNFgiven3NF();
+        } catch (const invalid_argument& e) {
+            cout << "exception: relation not in 3NF";
+        }
+        cout << ANSI_YELLOW << "\n\n" << string(100, '-') << "\n" << ANSI_NORMAL;
+    }
+}
+
 void test::testProject() {
     set<Relation> rels = rel::readFromFile("file/project/project_relations.txt");
     for (const Relation& rel : rels) {

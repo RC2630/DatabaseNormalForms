@@ -331,6 +331,25 @@ set<Relation> Relation::decomp3NFsynthesis() const {
 
 }
 
+bool Relation::possiblyNotInBCNFgiven3NF() const {
+
+    if (!this->isIn3NF()) {
+        throw invalid_argument("assumed relation is in 3nf");
+    }
+
+    vector<set<Attribute>> keys = setUtil::setToVector(this->findAllKeys());
+    for (int i = 0; i < keys.size() - 1; i++) {
+        for (int j = i + 1; j < keys.size(); j++) {
+            if (!setUtil::intersect(keys.at(i), keys.at(j)).empty()) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

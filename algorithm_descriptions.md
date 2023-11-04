@@ -169,13 +169,13 @@
 		- in other words, check if any relation is a strict subset of another relation
 		- if there are, then remove all such subset relations from decomp
 
-- would 3NF decomp be the same as BCNF
-	- input: R rel
+- given that a relation is in 3NF, is it possibly not in BCNF?
+	- input: R rel (in 3NF)
 	- output: bool
 	- steps:
-		- note that this algorithm only says if they are DEFINITELY the same or POSSIBLY NOT the same (never DEFINITELY NOT the same)
+		- note that this algorithm only says if rel is DEFINITELY in BCNF or POSSIBLY NOT in BCNF (never DEFINITELY NOT in BCNF)
 		- (1) check if rel has multiple valid candidate keys
 		- (2) check if rel has at least 1 key with multiple attributes in it
 		- (3) check if rel has at least 2 keys with overlapping attributes
 		- a simplification is to only to check (3) because in order for (3) to be true, (1) and (2) both need to be true as well
-		- if all of (1), (2), and (3) are true, then the 3NF and BCNF are POSSIBLY NOT the same; otherwise they are DEFINITELY the same
+		- if all of (1), (2), and (3) are true, then rel is POSSIBLY NOT in BCNF; otherwise rel is DEFINITELY in BCNF
