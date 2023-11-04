@@ -290,6 +290,47 @@ set<Relation> Relation::decomp3NFlosslessJoin() const {
 
 }
 
+set<Relation> Relation::decomp3NFsynthesis() const {
+    
+    if (this->isIn3NF()) {
+        return {*this};
+    }
+
+    set<Relation> decomp;
+    set<FunctionalDependency> minCov = fd::minimalCover(this->fds);
+
+    // place a relation for every FD in the minimal cover
+    for (const FunctionalDependency& fd : minCov) {
+        decomp.insert(Relation(this->name, setUtil::setUnion(fd.left, fd.right), this->fds, true, this->fullyFindImps, this->printFDs));
+    }
+
+    // check if the minimal cover contains a key
+    bool containsKey = false;
+    for (const Relation& rel : decomp) {
+        if (this->isSuperkey(rel.atts)) {
+            containsKey = true;
+            break;
+        }
+    }
+
+    // if there is no key, add in a key
+    if (!containsKey) {
+        set<Attribute> key = *this->findAllKeys().begin();
+        decomp.insert(Relation(this->name, key, this->fds, true, this->fullyFindImps, this->printFDs));
+    }
+
+    vector<Relation> decompVec = setUtil::setToVector(rel::removeRedundantRelations(decomp));
+    vector<string> labels = statUtil::generateNumberLabels(1, decompVec.size());
+
+    int currLabel = 0;
+    for (Relation& rel : decompVec) {
+        rel.name = this->name + "." + labels.at(currLabel++);
+    }
+
+    return setUtil::vectorToSet(decompVec);
+
+}
+
 bool Relation::operator < (const Relation& other) const {
     return tie(name, atts, fds) < tie(other.name, other.atts, other.fds);
 }

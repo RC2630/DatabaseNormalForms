@@ -303,6 +303,19 @@ void losslessJoin3NF() {
     }
 }
 
+void synthesis3NF() {
+    try {
+        cout << "\nEnter the name of the relation: ";
+        Relation rel = inputRelation();
+        cout << "\nHere are the relations in the 3NF decomposition of your relation (using the synthesis method):\n";
+        for (const Relation& r : rel.decomp3NFsynthesis()) {
+            cout << "\n" << r << "\n";
+        }
+    } catch (const runtime_error& e) {
+        cout << noRelationErrorMessage(e.what());
+    }
+}
+
 void run() {
     
     cout << ANSI_NORMAL << "\nWelcome to the Database Normal Forms program! Please type "
@@ -372,6 +385,8 @@ void run() {
             check3NF();
         } else if (parse::commandIs(command, "/lj3nf")) {
             losslessJoin3NF();
+        } else if (parse::commandIs(command, "/syn3nf")) {
+            synthesis3NF();
         } else {
             cout << ANSI_RED << "\nInvalid command or wrong number of arguments. Try again!\n" << ANSI_NORMAL;
         }

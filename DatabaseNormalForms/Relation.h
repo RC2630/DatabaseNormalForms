@@ -38,6 +38,7 @@ struct Relation {
     bool violates3NF(const FunctionalDependency& fd) const;
     bool isIn3NF() const;
     set<Relation> decomp3NFlosslessJoin() const;
+    set<Relation> decomp3NFsynthesis() const;
 
     bool operator < (const Relation& other) const;
     bool operator == (const Relation& other) const;
